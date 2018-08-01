@@ -1,0 +1,15 @@
+.footer {
+    background-color:#ee6e73;
+    height:70px;
+    width:100vw;
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100vw;
+    padding:20px;
+
+}
+
+.footer button {
+    margin-right:20px;
+}

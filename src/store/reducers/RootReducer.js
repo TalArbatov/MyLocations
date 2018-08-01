@@ -1,6 +1,9 @@
-import {combineReducers} from 'redux';
+import CategoryReducer from './CategoryReducer';
 import CounterReducer from './CounterReducer';
 
+import {combineReducers} from 'redux';
+
 export default combineReducers({
-    CounterReducer: CounterReducer
+    CounterReducer: CounterReducer,
+    CategoryReducer: CategoryReducer
 });

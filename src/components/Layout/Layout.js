@@ -2,10 +2,11 @@ import React from 'react';
 import Navigation from './Navigation/Navigation';
 
 export default (props) => {
+
+
     return(
-        <div>
-            <Navigation />
+        <Navigation>
             {props.children}
-        </div>
+        </Navigation>
     )
 }
