@@ -14,7 +14,28 @@ const PropertiesModal = props => {
       style={customStyles}
     >
       <div>
-       <p>hello</p>
+       <table>
+         <thead></thead>
+         <tbody>
+           <tr>
+             <th>Name: </th>
+             <td>{props.location.name}</td>
+           </tr>
+           <tr>
+             <th>Address: </th>
+             <td>{props.location.address}</td>
+           </tr>
+           <tr>
+             <th>Coordinates: </th>
+             <td>{props.location.coordinates}</td>
+           </tr>
+           <tr>
+             <th>Category: </th>
+             <td>{props.location.category}</td>
+           </tr>
+         </tbody>
+       </table>
+       <button onClick={props.closeModal.bind(this, 'propertiesModal')}>Close</button>
       </div>
      
     </Modal>

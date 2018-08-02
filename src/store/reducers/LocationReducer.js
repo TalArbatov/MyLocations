@@ -1,11 +1,26 @@
 import * as actions from "../actions";
 
-const initialState = {
-  locations: JSON.parse(localStorage.locations),
-  locationsByGroup: [{
-      header: 'All locations',
-      locations: JSON.parse(localStorage.locations)
+let allLocations = [];
+let locationsByGroup = [{
+  header: "All locations",
+  locations: []
+}];
+
+try {
+  allLocations = JSON.parse(localStorage.locations);
+  locationsByGroup = [{
+    header: 'All locations',
+    locations: allLocations
   }]
+}
+catch(e) {
+  console.log('ERROR: fetching location. (LocationReducer)')
+  localStorage.locations = JSON.stringify([]);
+}
+
+const initialState = {
+  locations: allLocations,
+  locationsByGroup: locationsByGroup
 };
 
 export default (state = initialState, action) => {

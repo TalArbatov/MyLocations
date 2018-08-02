@@ -9,32 +9,7 @@ export default (state = initialState, action) => {
   const newState = { ...state };
   let appState;
   switch (action.type) {
-    // case actions.ADD_CATEGORY:
-    //     console.log('adding....');
-    //     if(localStorage.appState != null) {
-    //          appState = JSON.parse(localStorage.appState);
-    //         console.log('appState found!');
-    //         let existingCategories = appState.categories;
-    //         if(existingCategories == [] || existingCategories == undefined) {
-    //             console.log('NO CATEGORIES FOUND EXISITING');
-    //             appState.categories = [action.payload.name]
-    //         }
-    //         else {
-    //             //found existing categories
-    //             appState.categories.push(action.payload.name);
-    //         }
 
-    //     }
-    //     else {
-    //         //cant find appstate
-    //         console.log('CANT FIND APP STATE');
-    //          appState = {categories: [action.payload.name]}
-    //     }
-    //     console.log(appState);
-    //     localStorage.appState = JSON.stringify(appState);
-    //     newState.categories = appState.categories;
-
-    //     break;
     case actions.ADD_CATEGORY:
       newState.categories.push({ name: action.payload.name });
       break;
@@ -77,8 +52,11 @@ export default (state = initialState, action) => {
         });
       } catch (e) {
         console.log("ERROR, CATCHED!");
+        console.log(e);
+        localStorage.categories = JSON.stringify([]);
       }
       newState.categories = allCategories;
+    
       //console.log('state inside reducer: ');
       //console.log(newState)
       break;

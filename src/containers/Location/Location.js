@@ -10,12 +10,19 @@ import LocationsOptions from "./LocationsOptions/LocationsOptions";
 import LocationsGroups from "./LocationsGroups/LocationsGroups";
 import LocationModal from './Modals/LocationModal/LocationModal';
 import PropertiesModal from './Modals/PropertiesModal/PropertiesModal';
+import ViewMapModal from './Modals/ViewMapModal/ViewMapModal';
+
 Modal.setAppElement("#root");
 
 class Location extends Component {
   state = {
-    addModal: false,
-    editModal: false,
+    modalState: {
+      addModal: false,
+      editModal: false,
+      propertiesModal: false,
+      viewMapModal: false,
+    },
+    
     newLocation: {
       name: "",
       address: "",
@@ -23,6 +30,12 @@ class Location extends Component {
       category: ""
     },
     updatedLocation: {
+      name: "",
+      address: "",
+      coordinates: "",
+      category: ""
+    },
+    viewedLocation: {
       name: "",
       address: "",
       coordinates: "",
@@ -49,13 +62,17 @@ class Location extends Component {
     console.log("add category");
     const newLocation = { ...this.state.newLocation };
     newLocation.category = this.props.CategoryReducer.categories[0].name;
-    this.setState({ addModal: true, newLocation });
+    const modalState = {...this.state.modalState};
+    modalState.addModal = true;
+    this.setState({modalState, newLocation });
   };
   removeHandler = () => {
     this.props.removeLocation();
   };
   closeModal = type => {
-    this.setState({ [type]: false });
+    const modalState = this.state.modalState;
+    modalState[type] = false
+    this.setState({ modalState });
   };
   //   inputChange = (type, e) => {
   //     const x = { ...this.state[type] };
@@ -81,7 +98,9 @@ class Location extends Component {
     const updatedLocation = this.props.LocationReducer.locations.find(
       location => location.isSelected
     );
-    this.setState({ editModal: true, updatedLocation: updatedLocation });
+    const modalState = {...this.state.modalState};
+    modalState.editModal = true;
+    this.setState({ modalState, updatedLocation: updatedLocation });
     //console.log(this.props)
     console.log(updatedLocation);
     console.log(this.state);
@@ -119,12 +138,6 @@ class Location extends Component {
 
   // when user re-selects option in group-by/sort-by
 
-  // selectChangeHandler = (type, e) => {
-  //   const options = this.state.options;
-  //   options[type] = e.target.value;
-  //   this.setState({options});
-  //   console.log(this.state.options);
-  // }
   sortOptionChange = e => {
     const options = this.state.options;
     options.sortBy = e.target.value;
@@ -139,66 +152,49 @@ class Location extends Component {
     console.log(this.state.options);
     this.props.groupLocation(e.target.value);
   };
+
+
+  viewHandler = () => {
+    const viewedLocation = this.props.LocationReducer.locations.find(
+      location => location.isSelected
+    );
+    this.setState({ modalState: {...this.state.modalState, propertiesModal: true}, viewedLocation});
+  }
+
+  viewMapHandler = () => {
+    const viewedLocation = this.props.LocationReducer.locations.find(
+      location => location.isSelected
+    );
+    this.setState({ modalState: {...this.state.modalState, viewMapModal: true}, viewedLocation});
+  }
+
   render() {
     // const noLocations = <h1>No locations available.</h1>;
     return (
       <div style={{ "padding-bottom": "70px", }}>
-          <LocationNavbar
-            status="category"
-            add={this.addHandler}
-            remove={this.removeHandler}
-            save={this.saveHandler}
-            edit={this.editHandler}
-          />
+        <LocationNavbar
+          status="category"
+          add={this.addHandler}
+          remove={this.removeHandler}
+          save={this.saveHandler}
+          edit={this.editHandler}
+          view={this.viewHandler}
+          map={this.viewMapHandler}
+        />
         <LocationsOptions
           sortOptionChange={this.sortOptionChange}
           groupOptionChange={this.groupOptionChange}
         />
-        {/* <LocationsList
-          locations={this.props.LocationReducer.locations}
-          locationsByGroup={this.props.LocationReducer.locationsByGroup}
-          selectLocationHandler={this.selectLocationHandler}
-          
-        /> */}
-        <LocationsGroups 
+      
+        <LocationsGroups
           locationsByGroup={this.props.LocationReducer.locationsByGroup}
           selectLocationHandler={this.selectLocationHandler}
         />
-        {/* {this.props.LocationReducer.locations.length === 0 ||
-        this.props.LocationReducer.locations == undefined ? (
-          noLocations
-        ) : (
-          <table>
-            <thead />
-            <tbody>
-              {this.props.LocationReducer.locations.map((location, index) => {
-                let style = { background: "transparent" };
-                if (location.isSelected) style.background = "blue";
-                return (
-                  <tr
-                    style={style}
-                    key={index}
-                    onClick={this.selectLocationHandler.bind(
-                      this,
-                      location.name
-                    )}
-                  >
-                    <td>{index}</td>
-                    <td>{location.name}</td>
-                    <td>{location.address}</td>
-                    <td>{location.coordinates}</td>
-                    <td>{location.category}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )} */}
-
+      
         {/*MODALS*/}
-        <LocationModal 
+        <LocationModal
           type='new'
-          isOpen={this.state.addModal}
+          isOpen={this.state.modalState.addModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           newLocation={this.state.newLocation}
@@ -207,11 +203,11 @@ class Location extends Component {
           addLocationHandler={this.addLocationHandler}
           closeModal={this.closeModal}
           changedNewSelect={this.changedNewSelect}
-            />
+        />
 
-           <LocationModal 
+        <LocationModal
           type='updated'
-          isOpen={this.state.editModal}
+          isOpen={this.state.modalState.editModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           updatedLocation={this.state.updatedLocation}
@@ -220,109 +216,25 @@ class Location extends Component {
           updateLocationHandler={this.props.updateLocation.bind(this, this.state.updatedLocation)}
           closeModal={this.closeModal}
           changedUpdatedSelect={this.changedUpdatedSelect}
-            />   
-        
-        {/* <Modal
-          isOpen={this.state.editModal}
+        />
+
+        <PropertiesModal
+          isOpen={this.state.modalState.propertiesModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          contentLabel="Example Modal"
-          style={customStyles}
-          type='new'
-        >
-          <div>
-            <p>EDIT</p>
+          closeModal={this.closeModal}
+          location={this.state.viewedLocation}
+        />
 
-            <label>Name:</label>
-            <input
-              type="text"
-              value={this.state.updatedLocation.name}
-              onChange={this.updatedInputChange.bind(this, "name")}
-            />
-            <label>Address:</label>
-            <input
-              type="text"
-              value={this.state.updatedLocation.address}
-              onChange={this.updatedInputChange.bind(this, "address")}
-            />
-            <label>coordinates:</label>
-            <input
-              type="text"
-              value={this.state.updatedLocation.coordinates}
-              onChange={this.updatedInputChange.bind(this, "coordinates")}
-            />
-            <label>category:</label>
-            <Input
-              type="select"
-              onChange={this.changedUpdatedSelect}
-              value={this.state.updatedLocation.category}
-            >
-              {this.props.CategoryReducer.categories.map((category, index) => {
-                return <option key={index}>{category.name}</option>;
-              })}
-            </Input>
-          </div>
-          <button
-            onClick={this.props.updateLocation.bind(
-              this,
-              this.state.updatedLocation
-            )}
-          >
-            Edit
-          </button>
-          <button onClick={this.closeModal.bind(this, "editModal")}>
-            close
-          </button>
-        </Modal> */}
-
-
-        {/* <Modal
-          isOpen={this.state.addModal}
+        <ViewMapModal 
+           isOpen={this.state.modalState.viewMapModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          contentLabel="Example Modal"
-          style={customStyles}
-        >
-          <div>
-            <p>ADD</p>
+          closeModal={this.closeModal}
+          location={this.state.viewedLocation}
+        />
 
-            <label>Name:</label>
-            <input
-              type="text"
-              value={this.state.newLocation.name}
-              onChange={this.newInputChange.bind(this, "name")}
-            />
-            <label>Address:</label>
-            <input
-              type="text"
-              value={this.state.newLocation.address}
-              onChange={this.newInputChange.bind(this, "address")}
-            />
-            <label>coordinates:</label>
-            <input
-              type="text"
-              value={this.state.newLocation.coordinates}
-              onChange={this.newInputChange.bind(this, "coordinates")}
-            />
-            <label>category:</label>
-            <Input
-              type="select"
-              onChange={this.changedNewSelect}
-              defaultValue={this.state.newLocation.category}
-            >
-              {this.props.CategoryReducer.categories.map((category, index) => {
-                <option disabled="disabled">Choose Category:</option>;
-                return <option key={index}>{category.name}</option>;
-              })}
-            </Input>
-          </div>
-          <br />
-          <button onClick={this.addLocationHandler}>Add</button>
-          <button onClick={this.closeModal.bind(this, "addModal")}>
-            close
-          </button>
-        </Modal> */}
-
+       
       </div>
     );
   }
