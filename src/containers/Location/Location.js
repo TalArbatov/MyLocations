@@ -1,25 +1,16 @@
 import React, { Component } from "react";
-import TopNavbar from "../TopNavbar/TopNavbar";
+// import TopNavbar from "../TopNavbar/TopNavbar";
+import LocationNavbar from './LocationNavbar/LocationNavbar';
 import Modal from "react-modal";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
-import { Input, Row } from "react-materialize";
+import { Input } from "react-materialize";
 import LocationsList from "./LocationsList/LocationsList";
 import LocationsOptions from "./LocationsOptions/LocationsOptions";
 import LocationsGroups from "./LocationsGroups/LocationsGroups";
+import LocationModal from './Modals/LocationModal/LocationModal';
 
 Modal.setAppElement("#root");
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
-  }
-};
 
 class Location extends Component {
   state = {
@@ -152,7 +143,7 @@ class Location extends Component {
     // const noLocations = <h1>No locations available.</h1>;
     return (
       <div style={{ "padding-bottom": "70px", }}>
-          <TopNavbar
+          <LocationNavbar
             status="category"
             add={this.addHandler}
             remove={this.removeHandler}
@@ -205,59 +196,39 @@ class Location extends Component {
         )} */}
 
         {/*MODALS*/}
-        <Modal
+        <LocationModal 
+          type='new'
           isOpen={this.state.addModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          contentLabel="Example Modal"
-          style={customStyles}
-        >
-          <div>
-            <p>ADD</p>
+          newLocation={this.state.newLocation}
+          categories={this.props.CategoryReducer.categories}
+          newInputChange={this.newInputChange}
+          addLocationHandler={this.addLocationHandler}
+          closeModal={this.closeModal}
+          changedNewSelect={this.changedNewSelect}
+            />
 
-            <label>Name:</label>
-            <input
-              type="text"
-              value={this.state.newLocation.name}
-              onChange={this.newInputChange.bind(this, "name")}
-            />
-            <label>Address:</label>
-            <input
-              type="text"
-              value={this.state.newLocation.address}
-              onChange={this.newInputChange.bind(this, "address")}
-            />
-            <label>coordinates:</label>
-            <input
-              type="text"
-              value={this.state.newLocation.coordinates}
-              onChange={this.newInputChange.bind(this, "coordinates")}
-            />
-            <label>category:</label>
-            <Input
-              type="select"
-              onChange={this.changedNewSelect}
-              defaultValue={this.state.newLocation.category}
-            >
-              {this.props.CategoryReducer.categories.map((category, index) => {
-                <option disabled="disabled">Choose Category:</option>;
-                return <option key={index}>{category.name}</option>;
-              })}
-            </Input>
-          </div>
-          <br />
-          <button onClick={this.addLocationHandler}>Add</button>
-          <button onClick={this.closeModal.bind(this, "addModal")}>
-            close
-          </button>
-        </Modal>
-
-        <Modal
+           <LocationModal 
+          type='updated'
+          isOpen={this.state.editModal}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          updatedLocation={this.state.updatedLocation}
+          categories={this.props.CategoryReducer.categories}
+          updatedInputChange={this.updatedInputChange}
+          updateLocationHandler={this.props.updateLocation.bind(this, this.state.updatedLocation)}
+          closeModal={this.closeModal}
+          changedUpdatedSelect={this.changedUpdatedSelect}
+            />   
+        
+        {/* <Modal
           isOpen={this.state.editModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           contentLabel="Example Modal"
           style={customStyles}
+          type='new'
         >
           <div>
             <p>EDIT</p>
@@ -302,7 +273,56 @@ class Location extends Component {
           <button onClick={this.closeModal.bind(this, "editModal")}>
             close
           </button>
-        </Modal>
+        </Modal> */}
+
+
+        {/* <Modal
+          isOpen={this.state.addModal}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          contentLabel="Example Modal"
+          style={customStyles}
+        >
+          <div>
+            <p>ADD</p>
+
+            <label>Name:</label>
+            <input
+              type="text"
+              value={this.state.newLocation.name}
+              onChange={this.newInputChange.bind(this, "name")}
+            />
+            <label>Address:</label>
+            <input
+              type="text"
+              value={this.state.newLocation.address}
+              onChange={this.newInputChange.bind(this, "address")}
+            />
+            <label>coordinates:</label>
+            <input
+              type="text"
+              value={this.state.newLocation.coordinates}
+              onChange={this.newInputChange.bind(this, "coordinates")}
+            />
+            <label>category:</label>
+            <Input
+              type="select"
+              onChange={this.changedNewSelect}
+              defaultValue={this.state.newLocation.category}
+            >
+              {this.props.CategoryReducer.categories.map((category, index) => {
+                <option disabled="disabled">Choose Category:</option>;
+                return <option key={index}>{category.name}</option>;
+              })}
+            </Input>
+          </div>
+          <br />
+          <button onClick={this.addLocationHandler}>Add</button>
+          <button onClick={this.closeModal.bind(this, "addModal")}>
+            close
+          </button>
+        </Modal> */}
+
       </div>
     );
   }
@@ -389,6 +409,17 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)"
+  }
+}
 
 export default connect(
   mapStateToProps,

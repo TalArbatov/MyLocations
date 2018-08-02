@@ -1,12 +1,12 @@
-import React from 'react';
-import SortOption from './SortOption/SortOption';
-import GroupOption from './GroupOption/GroupOption';
+import React from "react";
+import SortOption from "./SortOption/SortOption";
+import GroupOption from "./GroupOption/GroupOption";
 
 export default props => {
-    return(
-        <div>
-            <SortOption selectChange={props.sortOptionChange}/>
-            <GroupOption selectChange={props.groupOptionChange}/>
-        </div>
-    )
-}
+  return (
+    <div>
+      <GroupOption selectChange={props.groupOptionChange} />
+      <SortOption selectChange={props.sortOptionChange} />
+    </div>
+  );
+};

@@ -34,6 +34,7 @@ export default (state = initialState, action) => {
 
     case actions.ADD_LOCATION:
       newState.locations.push({ ...action.payload.location });
+      
       break;
 
     case actions.SAVE_LOCATIONS:
