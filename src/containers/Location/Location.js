@@ -9,7 +9,7 @@ import LocationsList from "./LocationsList/LocationsList";
 import LocationsOptions from "./LocationsOptions/LocationsOptions";
 import LocationsGroups from "./LocationsGroups/LocationsGroups";
 import LocationModal from './Modals/LocationModal/LocationModal';
-
+import PropertiesModal from './Modals/PropertiesModal/PropertiesModal';
 Modal.setAppElement("#root");
 
 class Location extends Component {
