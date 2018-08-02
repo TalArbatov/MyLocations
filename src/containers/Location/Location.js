@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 import { Input, Row } from "react-materialize";
 import LocationsList from "./LocationsList/LocationsList";
-import LocationsOptions from './LocationsOptions/LocationsOptions';
+import LocationsOptions from "./LocationsOptions/LocationsOptions";
+import LocationsGroups from "./LocationsGroups/LocationsGroups";
 
 Modal.setAppElement("#root");
 
@@ -37,8 +38,8 @@ class Location extends Component {
       category: ""
     },
     options: {
-      sortBy: '',
-      groupBy: '',
+      sortBy: "",
+      groupBy: ""
     }
   };
 
@@ -136,34 +137,41 @@ class Location extends Component {
   sortOptionChange = e => {
     const options = this.state.options;
     options.sortBy = e.target.value;
-    this.setState({options});
+    this.setState({ options });
     console.log(this.state.options);
     this.props.sortLocation(e.target.value);
-  }
+  };
   groupOptionChange = e => {
     const options = this.state.options;
     options.groupBy = e.target.value;
-    this.setState({options});
+    this.setState({ options });
     console.log(this.state.options);
     this.props.groupLocation(e.target.value);
-  }
+  };
   render() {
     // const noLocations = <h1>No locations available.</h1>;
     return (
-      <div>
-        <TopNavbar
-          status="category"
-          add={this.addHandler}
-          remove={this.removeHandler}
-          save={this.saveHandler}
-          edit={this.editHandler}
+      <div style={{ "padding-bottom": "70px", }}>
+          <TopNavbar
+            status="category"
+            add={this.addHandler}
+            remove={this.removeHandler}
+            save={this.saveHandler}
+            edit={this.editHandler}
+          />
+        <LocationsOptions
+          sortOptionChange={this.sortOptionChange}
+          groupOptionChange={this.groupOptionChange}
         />
-        <LocationsOptions sortOptionChange={this.sortOptionChange} groupOptionChange={this.groupOptionChange}/>
-        <LocationsList
+        {/* <LocationsList
           locations={this.props.LocationReducer.locations}
           locationsByGroup={this.props.LocationReducer.locationsByGroup}
           selectLocationHandler={this.selectLocationHandler}
           
+        /> */}
+        <LocationsGroups 
+          locationsByGroup={this.props.LocationReducer.locationsByGroup}
+          selectLocationHandler={this.selectLocationHandler}
         />
         {/* {this.props.LocationReducer.locations.length === 0 ||
         this.props.LocationReducer.locations == undefined ? (

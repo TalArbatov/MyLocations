@@ -69,16 +69,28 @@ export default (state = initialState, action) => {
       console.log("sorting... (in reducer)");
       switch (action.payload.sortType) {
         case "Alphabetical order":
-          newState.locations.sort((a, b) => {
-            if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-            return -1;
+          newState.locationsByGroup.forEach(group => {
+                group.locations.sort((a,b) => {
+                    if(a.name.toLowerCase() > b.name.toLowerCase()) return 1
+                    return -1;
+                });
           });
+        //   newState.locations.sort((a, b) => {
+        //     if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+        //     return -1;
+        //   });
           break;
         case "Alphabetical order (reverse)":
-          newState.locations.sort((a, b) => {
-            if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-            return 1;
-          });
+        newState.locationsByGroup.forEach(group => {
+            group.locations.sort((a,b) => {
+                if(a.name.toLowerCase() > b.name.toLowerCase()) return -1
+                return 1;
+            });
+      });
+        //   newState.locations.sort((a, b) => {
+        //     if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+        //     return 1;
+        //   });
           break;
         case "No sort":
           let allLocations = [];
@@ -138,12 +150,14 @@ export default (state = initialState, action) => {
             });
             locationsByGroup.push(group);
           }
+          
 
           break;
 
         default:
           break;
       }
+      newState.locationsByGroup = locationsByGroup;
       console.log("final:");
       console.log(locationsByGroup);
       break;
@@ -153,6 +167,9 @@ export default (state = initialState, action) => {
   }
   return newState;
 };
+
+
+//UTILS
 
 function onlyUnique(value, index, self) {
   return self.indexOf(value) == index;

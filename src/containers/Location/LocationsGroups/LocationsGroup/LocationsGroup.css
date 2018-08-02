@@ -1,0 +1,18 @@
+.wrapper {
+    text-align:center;
+    margin:0;
+    margin-bottom:20px;
+}
+
+.text {
+    font-weight: 100;
+    font-size:20px;
+    width:50vw;
+    text-align: center;
+    margin:auto;
+    background: repeating-linear-gradient(to left, white, #f3f3f3, white)
+}
+
+.text p {
+    margin:0;
+}
