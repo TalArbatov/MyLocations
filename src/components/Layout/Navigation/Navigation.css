@@ -5,11 +5,48 @@
     position:absolute;
     left:0;
     bottom:0;
-    width:100vw;
     padding:20px;
 
 }
 
+.footer2 {
+    background-color:#ee6e73;
+    height:70px;
+    width:100vw;
+    position:absolute;
+    left:0;
+    bottom:0;
+    padding:0;
+}
+.footer2 ul {
+    list-style-type:none;
+    
+}
+.footer2 ul, .footer2 li, .footer2 a{
+    display:inline-block;
+    color:white;
+    margin:0;
+}
+.footer2 a {
+    width:50vw;
+    text-align: center;
+    height:70px;
+    line-height: 70px;
+}
+.footer2 a {
+    font-size:20px;
+    transition:0.15s;
+
+}
+.footer2 a:hover {
+    background: #e28084;
+}
+
 .footer button {
     margin-right:20px;
+}
+
+
+.navLink {
+    width:30%;
 }

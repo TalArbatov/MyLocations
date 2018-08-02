@@ -44,7 +44,7 @@ export default (state = initialState, action) => {
       break;
 
     case actions.SELECT_CATEGORY:
-      console.log(newState.categories);
+      //console.log(newState.categories);
       newState.categories.map(category => {
         if (category.name === action.payload.name) category.isSelected = true;
         else category.isSelected = false;
@@ -68,6 +68,7 @@ export default (state = initialState, action) => {
       break;
 
     case actions.GET_CATEGORIES:
+      console.log('GET_CATEGORIES');
       let allCategories = [];
       try {
         allCategories = JSON.parse(localStorage.categories);
@@ -78,6 +79,8 @@ export default (state = initialState, action) => {
         console.log("ERROR, CATCHED!");
       }
       newState.categories = allCategories;
+      //console.log('state inside reducer: ');
+      //console.log(newState)
       break;
 
     default:

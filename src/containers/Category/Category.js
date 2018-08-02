@@ -33,12 +33,7 @@ class Category extends Component {
     this.props.getCategories();
     console.log(this.props);
   }
-  //   componentWillUpdate() {
-  //       this.props.saveCategories();
-  //   }
-
   addHandler = () => {
-    console.log("add category");
     this.setState({ addModal: true });
   };
   removeHandler = () => {
@@ -94,7 +89,7 @@ class Category extends Component {
                   if(category.isSelected)
                     style.background = 'blue';
                 return (
-                  <tr style={style} onClick={this.selectCategoryHandler.bind(this, category.name)}>
+                  <tr key={index} style={style} onClick={this.selectCategoryHandler.bind(this, category.name)}>
                     <td>{index}</td>
                     <td>{category.name}</td>
                   </tr>
