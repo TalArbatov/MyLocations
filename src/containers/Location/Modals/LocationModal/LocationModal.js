@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import { Input } from "react-materialize";
+import ViewMap from '../ViewMapModal/ViewMap/ViewMap';
 //props => addModal / afterOpenModal / closeModal / newLocation / categories /
 // addLocationHandler / changedNewSelect / newInputChange / type (new / updated)
 
@@ -54,6 +55,7 @@ const LocationModal = props => {
           onChange={props[inputChange].bind(this, "address")}
         />
         <label>coordinates:</label>
+        <ViewMap />
         <input
           type="text"
           value={props[location].coordinates}
@@ -65,8 +67,9 @@ const LocationModal = props => {
           onChange={props[changedSelect]}
           defaultValue={props[location].category}
         >
+        <option disabled="disabled">Choose Category:</option>
           {props.categories.map((category, index) => {
-            <option disabled="disabled">Choose Category:</option>;
+            
             return <option key={index}>{category.name}</option>;
           })}
         </Input>

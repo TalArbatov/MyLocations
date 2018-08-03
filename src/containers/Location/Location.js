@@ -91,6 +91,9 @@ class Location extends Component {
 
   selectLocationHandler = name => {
     this.props.selectLocation(name);
+
+    // device vibrates on location select
+    window.navigator.vibrate(200);
   };
 
   editHandler = () => {

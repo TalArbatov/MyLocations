@@ -2,16 +2,26 @@ import React from 'react';
 import { GoogleMap, Marker, withGoogleMap, withScriptjs } from "react-google-maps"
 
 const ViewMap = withScriptjs(withGoogleMap((props) => {
+
+ 
+    
     return (
         <div>
             <GoogleMap
+                onClick={props.onClick}
                 defaultZoom={8}
-                defaultCenter={{ lat: -34.397, lng: 150.644 }}
+                defaultCenter={{ lat: props.marker.lat, lng: props.marker.lng }}
             >
-                {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
+            <Marker draggable={true} position={{ lat: props.marker.lat, lng: props.marker.lng }} />
             </GoogleMap>
         </div>
     )
 }));
 
+
+  
+
 export default ViewMap;
+
+
+
