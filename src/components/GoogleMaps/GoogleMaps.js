@@ -91,7 +91,23 @@ export default class GoogleMaps extends Component {
                     onMarkerChange={this.markerChangeHandler}
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgMjtI_RinoSi85S-1p_1SBSPvF9F15_o&callback=initMap"
                     loadingElement={< div style={{ height: `100%`, width: '100%' }} />}
-                    containerElement={< div style={{ height: `500px`, width: '500px' }} />}
+                    containerElement={< div style={{ height: `500px`, width: '100%', textAlign: 'center' }} />}
+                    mapElement={< div style={{ height: `100%`, width: '100%' }} />}
+
+                />
+            );
+        }
+        else if(this.props.type === 'updated'){
+            return (
+
+                <Map
+                    marker={marker}
+                    onClick={this.markerChangeHandler}
+
+                    onMarkerChange={this.markerChangeHandler}
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgMjtI_RinoSi85S-1p_1SBSPvF9F15_o&callback=initMap"
+                    loadingElement={< div style={{ height: `100%`, width: '100%' }} />}
+                    containerElement={< div style={{ height: `500px`, width: '100%', textAlign: 'center' }} />}
                     mapElement={< div style={{ height: `100%`, width: '100%' }} />}
 
                 />
@@ -107,7 +123,7 @@ export default class GoogleMaps extends Component {
                     onMarkerChange={this.markerChangeHandler}
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgMjtI_RinoSi85S-1p_1SBSPvF9F15_o&callback=initMap"
                     loadingElement={< div style={{ height: `100%`, width: '100%' }} />}
-                    containerElement={< div style={{ height: `500px`, width: '500px' }} />}
+                    containerElement={< div style={{ height: `650px`, width: '1000px', textAlign: 'center' }} />}
                     mapElement={< div style={{ height: `100%`, width: '100%' }} />}
 
                 />

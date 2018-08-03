@@ -6,7 +6,7 @@ export default props => {
   return (
     <div className={cssStyles.toLeft}>
         <Input
-          s={4}
+          s={6}
           type="select"
           label="GROUP BY"
           defaultValue="1"

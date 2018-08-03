@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
-import { Input } from "react-materialize";
+import { Input, Button } from "react-materialize";
 import Map from '../../../../components/GoogleMaps/GoogleMaps';
 
 class ViewMapModal extends Component {
@@ -65,7 +65,6 @@ class ViewMapModal extends Component {
                 style={customStyles}
             >
                 <div>
-                    <h1>MAP</h1>
                     <div id="map"></div>
                     <Map coords={this.props.coords} changeLocation={false} type='view'/>
                     {/* <ViewMap
@@ -79,7 +78,7 @@ class ViewMapModal extends Component {
                         mapElement={<div style={{ height: `100%`, width: '100%' }} />}
 
                     /> */}
-                    <button onClick={this.props.closeModal.bind(this, 'viewMapModal')}>Close</button>
+                    <Button style={{marginTop: 10}}onClick={this.props.closeModal.bind(this, 'viewMapModal')}>Close</Button>
                 </div>
 
             </Modal>

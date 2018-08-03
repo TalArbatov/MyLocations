@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-import { Input } from "react-materialize";
+import { Input, Row, Button } from "react-materialize";
 import Map from '../../../../components/GoogleMaps/GoogleMaps';
 //props => addModal / afterOpenModal / closeModal / newLocation / categories /
 // addLocationHandler / changedNewSelect / newInputChange / type (new / updated)
@@ -15,7 +15,8 @@ const LocationModal = props => {
   let location; //newLocation || updatedLocation
   let locationHandler; //addLocationHandler || updateLocationHandler
   let changedSelect; //changeNewSelect || changeUpdatedSelect
-  let coordsChange;
+  let coordsChange; // newCoordsChange || updatedCoordsChange
+  let isValidated = false;
   if (props.type == "updated") {
     console.log("THIS IS A UPDATE MODAL");
     inputChange = "updatedInputChange";
@@ -23,6 +24,7 @@ const LocationModal = props => {
     locationHandler = "updateLocationHandler";
     changedSelect = "changedUpdatedSelect";
     coordsChange = "updatedCoordsChange";
+    isValidated = (props.updatedLocation.name !== '' && props.updatedLocation.address !== '')
   } else {
     //else type = 'new'
     console.log("THIS IS A NEW MODAL");
@@ -32,8 +34,11 @@ const LocationModal = props => {
     changedSelect = "changedNewSelect";
     locationHandler = "addLocationHandler";
     coordsChange = "newCoordsChange";
-
+    isValidated = (props.newLocation.name !== '' && props.newLocation.address !== '')
   }
+
+
+  let title = props.type === 'updated' ? "Update Existing Location" : "Create new Location"
   return (
     <Modal
       isOpen={props.isOpen}
@@ -43,35 +48,32 @@ const LocationModal = props => {
       style={customStyles}
     >
       <div>
-        {props.type == "updated" ? <p>UPDATE</p> : <p>NEW</p>}
-
-        <label>Name:</label>
-
-        <input
-          type="text"
-          value={props[location].name}
-          onChange={props[inputChange].bind(this, "name")}
-        />
-        <label>Address:</label>
-        <input
-          type="text"
-          value={props[location].address}
-          onChange={props[inputChange].bind(this, "address")}
-        />
-        <label>coordinates:</label>
-
-        {props.type === 'updated'
-          ? <Map coordsChange={props[coordsChange]} changeLocation={true} type={props.type} coords={props[location].coordinates}/>
-          : <Map coordsChange={props[coordsChange]} coords={props[location].coordinates} changeLocation={true} type={props.type} />}
+        <h5 style={{fontWeight:'100'}}>{title}</h5>
 
 
+        <Row>
+          <Input
+            s={6}
+            label='Name'
+            validate
+            error={props[location].name === '' ? 'Please fill Name' : null}
+            type="text"
+            value={props[location].name}
+            onChange={props[inputChange].bind(this, "name")}
+          />
 
-        <input
-          type="text"
-          value={props[location].coordinates}
-          onChange={props[inputChange].bind(this, "coordinates")}
-        />
-        <label>category:</label>
+          <Input
+            s={6}
+            error={props[location].address === '' ? 'Please fill Address' : null}
+            validate
+            label={'Address'}
+            value={props[location].address}
+            onChange={props[inputChange].bind(this, "address")}
+          />
+        </Row>
+        <div style={{ 'marginTop': '50px' }}>
+          <label >Category</label>
+        </div>
         <Input
           type="select"
           onChange={props[changedSelect]}
@@ -83,19 +85,35 @@ const LocationModal = props => {
             return <option key={index}>{category.name}</option>;
           })}
         </Input>
+
+        <label >coordinates:</label>
+
+        {props.type === 'updated'
+          ? <Map coordsChange={props[coordsChange]} changeLocation={true} type={props.type} coords={props[location].coordinates} />
+          : <Map coordsChange={props[coordsChange]} coords={props[location].coordinates} changeLocation={true} type={props.type} />}
+
+
+
+        <input
+          type="text"
+          value={props[location].coordinates}
+          disabled={true}
+          onChange={props[inputChange].bind(this, "coordinates")}
+        />
+
       </div>
       <br />
-      {props.type == "updated" ? (
-        <button onClick={props.updateLocationHandler}>EDIT</button>
+      {props.type === "updated" ? (
+        <Button disabled={!isValidated} style={{marginRight: '10px'}} onClick={() => {props.updateLocationHandler(); props.closeModal('editModal')}}>EDIT</Button>
       ) : (
-          <button onClick={props.addLocationHandler}>ADD</button>
+          <Button disabled={!isValidated} style={{marginRight: '10px'}} onClick={() => {props.addLocationHandler(); props.closeModal('addModal')}}>ADD</Button>
         )}
-      {props.type == "updated" ? (
-        <button onClick={props.closeModal.bind(this, "editModal")}>
+      {props.type === "updated" ? (
+        <Button onClick={props.closeModal.bind(this, "editModal")}>
           close
-        </button>
+        </Button>
       ) : (
-          <button onClick={props.closeModal.bind(this, "addModal")}>close</button>
+          <Button onClick={props.closeModal.bind(this, "addModal")}>close</Button>
         )}
     </Modal>
   );
@@ -108,7 +126,10 @@ const customStyles = {
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
+    maxHeight: '70vh',
+    minWidth: '50vw',
+    overflowY: 'scroll',
+    transform: "translate(-50%, -50%)",
   }
 };
 export default LocationModal;

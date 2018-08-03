@@ -6,10 +6,11 @@
 
 .text {
     font-weight: 100;
-    font-size:20px;
+    font-size:25px;
     width:50vw;
     text-align: center;
     margin:auto;
+    color:black;
     background: repeating-linear-gradient(to left, white, #f3f3f3, white)
 }
 

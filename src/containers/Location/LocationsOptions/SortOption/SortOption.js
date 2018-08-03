@@ -6,7 +6,7 @@ export default props => {
   return (
     <div className={cssStyles.toRight}>
         <Input
-          s={4}
+          s={8}
           type="select"
           label="SORT BY"
           defaultValue="1"

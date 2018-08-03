@@ -1,6 +1,8 @@
 import React from "react";
 import Modal from "react-modal";
 import { Input } from "react-materialize";
+import cssStyles from './PropertiesModal.css';
+
 const PropertiesModal = props => {
 
 
@@ -14,7 +16,7 @@ const PropertiesModal = props => {
       style={customStyles}
     >
       <div>
-       <table>
+       <table className={' ' +cssStyles.table}>
          <thead></thead>
          <tbody>
            <tr>
@@ -26,7 +28,7 @@ const PropertiesModal = props => {
              <td>{props.location.address}</td>
            </tr>
            <tr>
-             <th>Coordinates: </th>
+             <th>Coords: </th>
              <td>{props.location.coordinates}</td>
            </tr>
            <tr>
