@@ -5,7 +5,9 @@
     margin-top:10px;
 }
 
-
+.gradient {
+  background:repeating-linear-gradient(to left, white, #f3f3f3, white);
+}
 /*TABLE FILL STYLE*/
 /*COPIED & MODIFIED FROM:*/
 /*https://codepen.io/alassetter/pen/cyrfB*/

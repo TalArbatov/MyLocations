@@ -4,7 +4,7 @@ import cssStyles from './LocationsTable.css';
 
 //props => locations
 export default props => {
-    const noLocations = <h1>No locations available.</h1>;
+    const noLocations = <div className={cssStyles.gradient}><h1>No locations available.</h1></div>;
 
     return(
         <div className={cssStyles.wrapper}>

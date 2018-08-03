@@ -4,7 +4,7 @@ import { Input } from "react-materialize";
 import Map from '../../../../components/GoogleMaps/GoogleMaps';
 //props => addModal / afterOpenModal / closeModal / newLocation / categories /
 // addLocationHandler / changedNewSelect / newInputChange / type (new / updated)
-
+import GoogleMaps from '../../../../components/GoogleMaps/GoogleMaps';
 const LocationModal = props => {
   // console.log("props inside generic modal");
   // console.log(props);
@@ -60,8 +60,10 @@ const LocationModal = props => {
         />
         <label>coordinates:</label>
 
+        {props.type === 'updated'
+          ? <Map coordsChange={props[coordsChange]} changeLocation={true} type={props.type} coords={props[location].coordinates}/>
+          : <Map coordsChange={props[coordsChange]} coords={props[location].coordinates} changeLocation={true} type={props.type} />}
 
-        <Map coordsChange={props[coordsChange]} changeLocation={true}/>
 
 
         <input
@@ -75,9 +77,9 @@ const LocationModal = props => {
           onChange={props[changedSelect]}
           defaultValue={props[location].category}
         >
-        <option disabled="disabled">Choose Category:</option>
+          <option disabled="disabled">Choose Category:</option>
           {props.categories.map((category, index) => {
-            
+
             return <option key={index}>{category.name}</option>;
           })}
         </Input>
@@ -86,15 +88,15 @@ const LocationModal = props => {
       {props.type == "updated" ? (
         <button onClick={props.updateLocationHandler}>EDIT</button>
       ) : (
-        <button onClick={props.addLocationHandler}>ADD</button>
-      )}
+          <button onClick={props.addLocationHandler}>ADD</button>
+        )}
       {props.type == "updated" ? (
         <button onClick={props.closeModal.bind(this, "editModal")}>
           close
         </button>
       ) : (
-        <button onClick={props.closeModal.bind(this, "addModal")}>close</button>
-      )}
+          <button onClick={props.closeModal.bind(this, "addModal")}>close</button>
+        )}
     </Modal>
   );
 };

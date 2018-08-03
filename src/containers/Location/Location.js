@@ -5,7 +5,6 @@ import Modal from "react-modal";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 import { Input } from "react-materialize";
-import LocationsList from "./LocationsList/LocationsList";
 import LocationsOptions from "./LocationsOptions/LocationsOptions";
 import LocationsGroups from "./LocationsGroups/LocationsGroups";
 import LocationModal from './Modals/LocationModal/LocationModal';
@@ -61,6 +60,9 @@ class Location extends Component {
   addHandler = () => {
     console.log("add category");
     const newLocation = { ...this.state.newLocation };
+    // the default coordinates (in-case user reject location permission request) in Jerusalem, Israel
+    newLocation.coordinates = '31.771886, 35.289394';
+    // the default Category is the first.
     newLocation.category = this.props.CategoryReducer.categories[0].name;
     const modalState = {...this.state.modalState};
     modalState.addModal = true;
@@ -249,6 +251,8 @@ class Location extends Component {
         />
 
         <ViewMapModal 
+          type='view'
+          coords={this.state.viewedLocation.coordinates}
            isOpen={this.state.modalState.viewMapModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}

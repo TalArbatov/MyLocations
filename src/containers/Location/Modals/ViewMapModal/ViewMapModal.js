@@ -17,21 +17,31 @@ class ViewMapModal extends Component {
     // to access location, if granted, it will change the default marker
     // locaion from Jerusalem to current location
 
+
+
     componentDidMount = () => {
-        let marker = {
-            lat: 31.771886,
-            lng: 35.289394
-        };
-        if (window.navigator.geolocation)
-            window.navigator.geolocation.getCurrentPosition(function (position) {
-                marker = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                }
-            });
+        console.log("THIS IS VIEW MAPS MODAL")
+        const marker = this.props.coords;
+        let [lat, lng] = this.props.coords.split(',');
+        console.log('view maps modal lat: ' + lat + 'lang: ' + lng);
+
+    
+
         this.setState({ marker });
         
     }
+
+        // let marker = {
+        //     lat: 31.771886,
+        //     lng: 35.289394
+        // };
+        // if (window.navigator.geolocation)
+        //     window.navigator.geolocation.getCurrentPosition(function (position) {
+        //         marker = {
+        //             lat: position.coords.latitude,
+        //             lng: position.coords.longitude
+        //         }
+        //     });
 
     markerChangeHandler = (e) => {
         console.log(e);
@@ -45,7 +55,7 @@ class ViewMapModal extends Component {
 
 
     render() {
-
+      
         return (
             <Modal
                 isOpen={this.props.isOpen}
@@ -57,7 +67,7 @@ class ViewMapModal extends Component {
                 <div>
                     <h1>MAP</h1>
                     <div id="map"></div>
-                    <Map changeLocation={false}/>
+                    <Map coords={this.props.coords} changeLocation={false} type='view'/>
                     {/* <ViewMap
                         marker={this.state.marker}
                         onClick={this.markerChangeHandler}
