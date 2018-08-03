@@ -3,7 +3,7 @@ import Map from './Map/Map';
 
 export default class GoogleMaps extends Component {
 
-       // if user does not enable Location, the default position
+    // if user does not enable Location, the default position
     // will focus on Jerusalem, Israel.
     state = {
         marker: {
@@ -28,33 +28,37 @@ export default class GoogleMaps extends Component {
                 }
             });
         this.setState({ marker });
-        
+
     }
 
     markerChangeHandler = (e) => {
-        console.log(e);
-        const marker = {
-            lat: e.latLng.lat(),
-            lng: e.latLng.lng()
+        if (this.props.changeLocation) {
+            console.log(e);
+            const marker = {
+                lat: e.latLng.lat(),
+                lng: e.latLng.lng()
+            }
+            this.setState({ marker })
+            console.log(marker)
+            this.props.coordsChange(marker);
         }
-        this.setState({marker})
-        console.log(marker)
+
     }
 
 
     render() {
         return (
             <Map
-            marker={this.state.marker}
-            onClick={this.markerChangeHandler}
+                marker={this.state.marker}
+                onClick={this.markerChangeHandler}
 
-            onMarkerChange={this.markerChangeHandler}
-            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgMjtI_RinoSi85S-1p_1SBSPvF9F15_o&callback=initMap"
-            loadingElement={<div style={{ height: `100%`, width: '100%' }} />}
-            containerElement={<div style={{ height: `500px`, width: '500px' }} />}
-            mapElement={<div style={{ height: `100%`, width: '100%' }} />}
+                onMarkerChange={this.markerChangeHandler}
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgMjtI_RinoSi85S-1p_1SBSPvF9F15_o&callback=initMap"
+                loadingElement={<div style={{ height: `100%`, width: '100%' }} />}
+                containerElement={<div style={{ height: `500px`, width: '500px' }} />}
+                mapElement={<div style={{ height: `100%`, width: '100%' }} />}
 
-        />
+            />
         );
     }
 }

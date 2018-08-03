@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import { Input } from "react-materialize";
-import ViewMap from '../ViewMapModal/ViewMap/ViewMap';
+import Map from '../../../../components/GoogleMaps/GoogleMaps';
 //props => addModal / afterOpenModal / closeModal / newLocation / categories /
 // addLocationHandler / changedNewSelect / newInputChange / type (new / updated)
 
@@ -15,12 +15,14 @@ const LocationModal = props => {
   let location; //newLocation || updatedLocation
   let locationHandler; //addLocationHandler || updateLocationHandler
   let changedSelect; //changeNewSelect || changeUpdatedSelect
+  let coordsChange;
   if (props.type == "updated") {
     console.log("THIS IS A UPDATE MODAL");
     inputChange = "updatedInputChange";
     location = "updatedLocation";
     locationHandler = "updateLocationHandler";
     changedSelect = "changedUpdatedSelect";
+    coordsChange = "updatedCoordsChange";
   } else {
     //else type = 'new'
     console.log("THIS IS A NEW MODAL");
@@ -29,6 +31,8 @@ const LocationModal = props => {
     location = "newLocation";
     changedSelect = "changedNewSelect";
     locationHandler = "addLocationHandler";
+    coordsChange = "newCoordsChange";
+
   }
   return (
     <Modal
@@ -55,7 +59,11 @@ const LocationModal = props => {
           onChange={props[inputChange].bind(this, "address")}
         />
         <label>coordinates:</label>
-        <ViewMap />
+
+
+        <Map coordsChange={props[coordsChange]} changeLocation={true}/>
+
+
         <input
           type="text"
           value={props[location].coordinates}

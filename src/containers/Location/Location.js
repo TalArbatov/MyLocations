@@ -139,6 +139,23 @@ class Location extends Component {
     console.log(this.state);
   };
 
+  newCoordsChange = marker => {
+    
+    const latlng = `${marker.lat}, ${marker.lng}`;
+    const newLocation = this.state.newLocation;
+    newLocation.coordinates = latlng;
+    this.setState({newLocation});
+    console.log(this.state)
+    console.log(latlng)
+  }
+  updatedCoordsChange = marker => {
+    const latlng = `${marker.lat}, ${marker.lng}`;
+    const updatedLocation = this.state.updatedLocation;
+    updatedLocation.coordinates = latlng;
+    this.setState({updatedLocation});
+    console.log(this.state)
+    console.log(latlng)
+  }
   // when user re-selects option in group-by/sort-by
 
   sortOptionChange = e => {
@@ -206,6 +223,7 @@ class Location extends Component {
           addLocationHandler={this.addLocationHandler}
           closeModal={this.closeModal}
           changedNewSelect={this.changedNewSelect}
+          newCoordsChange={this.newCoordsChange}
         />
 
         <LocationModal
@@ -219,6 +237,7 @@ class Location extends Component {
           updateLocationHandler={this.props.updateLocation.bind(this, this.state.updatedLocation)}
           closeModal={this.closeModal}
           changedUpdatedSelect={this.changedUpdatedSelect}
+          updatedCoordsChange={this.updatedCoordsChange}
         />
 
         <PropertiesModal

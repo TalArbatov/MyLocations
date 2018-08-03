@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
 import { Input } from "react-materialize";
-import ViewMap from './ViewMap/ViewMap';
 import Map from '../../../../components/GoogleMaps/GoogleMaps';
 
 class ViewMapModal extends Component {
@@ -58,7 +57,7 @@ class ViewMapModal extends Component {
                 <div>
                     <h1>MAP</h1>
                     <div id="map"></div>
-                    <Map />
+                    <Map changeLocation={false}/>
                     {/* <ViewMap
                         marker={this.state.marker}
                         onClick={this.markerChangeHandler}
