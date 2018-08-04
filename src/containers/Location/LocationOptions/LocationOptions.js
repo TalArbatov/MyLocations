@@ -2,7 +2,7 @@ import React from "react";
 import SortOption from "./SortOption/SortOption";
 import GroupOption from "./GroupOption/GroupOption";
 
-export default props => {
+const LocationOptions = props => {
   return (
     <div>
       <GroupOption selectChange={props.groupOptionChange} />
@@ -10,3 +10,5 @@ export default props => {
     </div>
   );
 };
+
+export default LocationOptions;

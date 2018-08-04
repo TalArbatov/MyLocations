@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 import cssStyles from './Category.css';
+import CategoryModal from './../../components/Modals/CategoryModal/CategoryModal';
 
 Modal.setAppElement("#root");
 
@@ -34,14 +35,14 @@ class Category extends Component {
     this.props.getCategories();
     console.log(this.props);
   }
-  addHandler = () => {
+  openAddModal = () => {
     this.setState({ addModal: true });
   };
   removeHandler = () => {
     this.props.removeCategory();
   };
-  closeModal = (type) => {
-    this.setState({ [type]: false });
+  closeModal = (modal) => {
+    this.setState({ [modal]: false });
   };
   inputChange = (type, e) => {
     const x = { ...this.state[type] };
@@ -51,8 +52,12 @@ class Category extends Component {
   };
   addCategoryHandler = () => {
     this.props.addCategory(this.state.newCategory.name);
+    this.closeModal('addModal');
   };
-
+  editCategoryHandler = () => {
+    this.props.updateCategory(this.state.updatedCategory.name);
+    this.closeModal('editModal');
+  }
   saveHandler = () => {
     this.props.saveCategories();
   };
@@ -61,7 +66,7 @@ class Category extends Component {
       this.props.selectCategory(name);
   }
 
-  editHandler = () => {
+  openEditModal = () => {
     const updatedCategory = this.state.updatedCategory;
     updatedCategory.name = this.props.CategoryReducer.categories.find(category => category.isSelected).name;
     this.setState({editModal: true, updatedCategory})
@@ -73,10 +78,10 @@ class Category extends Component {
       <div>
         <TopNavbar
           status="category"
-          add={this.addHandler}
+          add={this.openAddModal}
           remove={this.removeHandler}
           save={this.saveHandler}
-          edit={this.editHandler}
+          edit={this.openEditModal}
         />
         {this.props.CategoryReducer.categories.length === 0 ||
         this.props.CategoryReducer.categories == undefined ? (
@@ -101,45 +106,23 @@ class Category extends Component {
         )}
 
         {/*MODALS*/}
-        <Modal
+        <CategoryModal
+          type='new'
           isOpen={this.state.addModal}
           onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          contentLabel="Example Modal"
-          style={customStyles}
-        >
-          <div>
-            <label>Name:</label>
-            <input
-              type="text"
-              value={this.state.newCategory.name}
-              onChange={this.inputChange.bind(this, 'newCategory')}
-            />
-          </div>
-          <button onClick={this.addCategoryHandler}>Add</button>
-          <button onClick={this.closeModal.bind(this, 'addModal')}>close</button>
-        </Modal>
-
-
-          <Modal
+          category={this.state.newCategory}
+          closeModal={this.closeModal}
+          categoryHandler={this.addCategoryHandler}
+          inputChange={this.inputChange}   />
+     
+        <CategoryModal
+          type='updated'
           isOpen={this.state.editModal}
           onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          contentLabel="Example Modal"
-          style={customStyles}
-        >
-          <div>
-              <p>EDIT</p>
-            <label>Name:</label>
-            <input
-              type="text"
-              value={this.state.updatedCategory.name}
-              onChange={this.inputChange.bind(this, 'updatedCategory')}
-            />
-          </div>
-          <button onClick={this.props.updateCategory.bind(this, this.state.updatedCategory.name)}>Edit</button>
-          <button onClick={this.closeModal.bind(this, 'editModal')}>close</button>
-        </Modal>
+          category={this.state.updatedCategory}
+          closeModal={this.closeModal}
+          categoryHandler={this.editCategoryHandler}
+          inputChange={this.inputChange} />
       </div>
     );
   }

@@ -1,15 +1,15 @@
 import React from 'react';
-import LocationsTableItem from './LocationsTableItem/LocationsTableItem';
-import cssStyles from './LocationsTable.css';
+import LocationTableItem from './LocationTableItem/LocationTableItem';
+import cssStyles from './LocationTable.css';
 
 //props => locations
-export default props => {
+const LocationTable = props => {
     const noLocations = <div className={cssStyles.gradient}><h1>No locations available.</h1></div>;
 
     return(
         <div className={cssStyles.wrapper}>
         {props.locations.length === 0 ||
-        props.locations == undefined ? (
+        props.locations === undefined ? (
           noLocations
         ) : (
           <table className={cssStyles['table-fill']}>
@@ -32,7 +32,7 @@ export default props => {
                 if(location.isSelected) newStyle = cssStyles.important;
     
                 return (
-                  <LocationsTableItem location={location}
+                  <LocationTableItem location={location}
                   styling={newStyle} index={index} selectLocationHandler={props.selectLocationHandler}/>
                 );
               })}
@@ -42,3 +42,5 @@ export default props => {
       </div>
     )
 }
+
+export default LocationTable;

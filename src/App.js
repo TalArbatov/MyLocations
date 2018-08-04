@@ -5,15 +5,11 @@ import Category from "./containers/Category/Category";
 import Location from "./containers/Location/Location";
 
 class App extends Component {
-  // state = {
-  //   page: ''
-  // }
 
   render() {
     return (
       <div>
-        <BrowserRouter>
-          
+        <BrowserRouter>          
           <Layout>
             <Route exact path="/category" component={() => <Category />} />
             <Route exact path="/location" component={() => <Location />} />

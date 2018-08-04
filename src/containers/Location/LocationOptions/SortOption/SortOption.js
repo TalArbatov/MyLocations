@@ -2,7 +2,7 @@ import React from "react";
 import { Input } from "react-materialize";
 import cssStyles from './SortOption.css';
 
-export default props => {
+const SortOption = props => {
   return (
     <div className={cssStyles.toRight}>
         <Input
@@ -10,8 +10,7 @@ export default props => {
           type="select"
           label="SORT BY"
           defaultValue="1"
-          onChange={props.selectChange}
-        >
+          onChange={props.selectChange}>
           <option>No sort</option>
           <option>Alphabetical order</option>
           <option>Alphabetical order (reverse)</option>
@@ -19,3 +18,5 @@ export default props => {
     </div>
   );
 };
+
+export default SortOption;

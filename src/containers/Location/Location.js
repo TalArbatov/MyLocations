@@ -3,11 +3,11 @@ import LocationNavbar from './LocationNavbar/LocationNavbar';
 import Modal from "react-modal";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
-import LocationsOptions from "./LocationsOptions/LocationsOptions";
-import LocationsGroups from "./LocationsGroups/LocationsGroups";
-import LocationModal from './Modals/LocationModal/LocationModal';
-import PropertiesModal from './Modals/PropertiesModal/PropertiesModal';
-import ViewMapModal from './Modals/ViewMapModal/ViewMapModal';
+import LocationOptions from "./LocationOptions/LocationOptions";
+import LocationGroups from "./LocationGroups/LocationGroups";
+import LocationModal from '../../components/Modals/LocationModal/LocationModal';
+import PropertiesModal from '../../components/Modals/PropertiesModal/PropertiesModal';
+import ViewMapModal from '../../components/Modals/ViewMapModal/ViewMapModal';
 
 Modal.setAppElement("#root");
 
@@ -184,12 +184,12 @@ class Location extends Component {
           view={this.viewHandler}
           map={this.viewMapHandler} />
 
-        <LocationsOptions
+        <LocationOptions
           sortOptionChange={this.sortOptionChange}
           groupOptionChange={this.groupOptionChange} />
 
 
-        <LocationsGroups
+        <LocationGroups
           locationsByGroup={this.props.LocationReducer.locationsByGroup}
           selectLocationHandler={this.selectLocationHandler} />
 

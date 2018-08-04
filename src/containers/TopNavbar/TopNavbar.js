@@ -1,7 +1,7 @@
 import React from 'react';
 import {Navbar, NavItem} from 'react-materialize';
 
-export default props => {
+const TopNavbar = props => {
     return(
         <Navbar brand="My Locations" right>
         <NavItem onClick={props.add} >Add</NavItem>
@@ -9,5 +9,7 @@ export default props => {
         <NavItem onClick={props.save} >Save</NavItem>
         <NavItem onClick={props.edit} >Edit</NavItem>
       </Navbar>
-    )
+    );
 }
+
+export default TopNavbar;

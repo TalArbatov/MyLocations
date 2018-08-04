@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import { Input, Row, Button } from "react-materialize";
-import Map from '../../../../components/GoogleMaps/GoogleMaps';
+import GoogleMaps from '../../GoogleMaps/GoogleMaps';
 
 
 const LocationModal = props => {
@@ -54,7 +54,7 @@ const LocationModal = props => {
         </Input>
 
         <label>coordinates:</label>
-        <Map coordsChange={props.onCoordsChange.bind(this, props.type)} changeLocation={true} type={props.type} coords={props.location.coordinates} />
+        <GoogleMaps coordsChange={props.onCoordsChange.bind(this, props.type)} changeLocation={true} type={props.type} coords={props.location.coordinates} />
         <input
           type="text"
           value={props.location.coordinates}

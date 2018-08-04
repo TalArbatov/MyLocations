@@ -1,14 +1,11 @@
 import React from 'react';
 
-
-//props => location & styling & index & selectLocationHandler
-export default props => {
+const LocationTableItem = props => {
     return(
         <tr
         className={props.styling}
         key={props.index}
         onClick={props.selectLocationHandler.bind(this, props.location.name)}>
-      
         <td>{props.index + 1}</td>
         <td>{props.location.name}</td>
         <td>{props.location.address}</td>
@@ -17,3 +14,5 @@ export default props => {
       </tr>
     );
 }
+
+export default LocationTableItem;
