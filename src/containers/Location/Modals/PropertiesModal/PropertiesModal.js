@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "react-modal";
-import { Input } from "react-materialize";
 import cssStyles from './PropertiesModal.css';
 
 const PropertiesModal = props => {

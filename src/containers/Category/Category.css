@@ -1,0 +1,12 @@
+.gradient {
+    background:repeating-linear-gradient(to left, white, #f3f3f3, white);
+    width:100vw;
+    text-align: center;
+    margin-top:100px;
+  }
+
+.gradient h1 {
+    margin:0;
+    font-weight: 200;
+
+}

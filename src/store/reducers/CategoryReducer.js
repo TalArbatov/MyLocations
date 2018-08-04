@@ -7,7 +7,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   const newState = { ...state };
-  let appState;
   switch (action.type) {
 
     case actions.ADD_CATEGORY:

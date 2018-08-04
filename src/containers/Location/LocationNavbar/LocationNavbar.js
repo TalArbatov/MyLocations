@@ -10,11 +10,6 @@ const LocationNavbar = props => {
       <NavItem onClick={props.edit}>Edit</NavItem>
       <NavItem onClick={props.view}>View</NavItem>
       <NavItem onClick={props.map}>View In Map</NavItem>
-
-      <NavItem href="/counter">
-        {/* <Button waves='light'>EDIT ME<Icon>save</Icon></Button> */}
-        Counter
-      </NavItem>
     </Navbar>
   );
 };

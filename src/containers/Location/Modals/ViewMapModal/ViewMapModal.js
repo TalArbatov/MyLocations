@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
-import { Input, Button } from "react-materialize";
+import { Button } from "react-materialize";
 import Map from '../../../../components/GoogleMaps/GoogleMaps';
 
 class ViewMapModal extends Component {

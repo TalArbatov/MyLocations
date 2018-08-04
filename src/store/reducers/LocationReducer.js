@@ -13,8 +13,7 @@ try {
     locations: allLocations
   }]
 }
-catch(e) {
-  console.log('ERROR: fetching location. (LocationReducer)')
+catch (e) {
   localStorage.locations = JSON.stringify([]);
 }
 
@@ -24,19 +23,19 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const newState = { ...state };
-  let appState;
+  const newState = { ...state }; 
   switch (action.type) {
+
     case actions.GET_LOCATIONS:
+    
       let allLocations = [];
       let locationsByGroup;
       try {
         allLocations = JSON.parse(localStorage.locations);
-        //test
         locationsByGroup = [{
-            header: "All locations",
-            locations: allLocations
-          }];
+          header: "All locations",
+          locations: allLocations
+        }];
       } catch (e) {
         console.log("ERROR INSIDE GET_LOCATIONS");
       }
@@ -49,7 +48,7 @@ export default (state = initialState, action) => {
 
     case actions.ADD_LOCATION:
       newState.locations.push({ ...action.payload.location });
-      
+
       break;
 
     case actions.SAVE_LOCATIONS:
@@ -86,27 +85,27 @@ export default (state = initialState, action) => {
       switch (action.payload.sortType) {
         case "Alphabetical order":
           newState.locationsByGroup.forEach(group => {
-                group.locations.sort((a,b) => {
-                    if(a.name.toLowerCase() > b.name.toLowerCase()) return 1
-                    return -1;
-                });
+            group.locations.sort((a, b) => {
+              if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
+              return -1;
+            });
           });
-        //   newState.locations.sort((a, b) => {
-        //     if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-        //     return -1;
-        //   });
+          //   newState.locations.sort((a, b) => {
+          //     if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+          //     return -1;
+          //   });
           break;
         case "Alphabetical order (reverse)":
-        newState.locationsByGroup.forEach(group => {
-            group.locations.sort((a,b) => {
-                if(a.name.toLowerCase() > b.name.toLowerCase()) return -1
-                return 1;
+          newState.locationsByGroup.forEach(group => {
+            group.locations.sort((a, b) => {
+              if (a.name.toLowerCase() > b.name.toLowerCase()) return -1
+              return 1;
             });
-      });
-        //   newState.locations.sort((a, b) => {
-        //     if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-        //     return 1;
-        //   });
+          });
+          //   newState.locations.sort((a, b) => {
+          //     if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+          //     return 1;
+          //   });
           break;
         case "No sort":
           let allLocations = [];
@@ -116,6 +115,7 @@ export default (state = initialState, action) => {
             console.log("ERROR INSIDE GET_LOCATIONS");
           }
           newState.locations = allLocations;
+          break;
         default:
           break;
       }
@@ -135,7 +135,7 @@ export default (state = initialState, action) => {
           break;
 
         case "Category":
-          // PROBLEM: exisiting location can possibly contain a category property
+          // PROBLEM: exisiting location can possibly cotnain a category property
           // that has been already removed || edited and does not show in the category local storage
           // SOLUTION: fetch (unique) category names from the location array instead.
 
@@ -166,7 +166,7 @@ export default (state = initialState, action) => {
             });
             locationsByGroup.push(group);
           }
-          
+
 
           break;
 
@@ -188,5 +188,5 @@ export default (state = initialState, action) => {
 //UTILS
 
 function onlyUnique(value, index, self) {
-  return self.indexOf(value) == index;
+  return self.indexOf(value) === index;
 }

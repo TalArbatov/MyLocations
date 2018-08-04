@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Row } from "react-materialize";
+import { Input } from "react-materialize";
 import cssStyles from './SortOption.css';
 
 export default props => {

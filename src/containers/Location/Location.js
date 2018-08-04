@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-// import TopNavbar from "../TopNavbar/TopNavbar";
 import LocationNavbar from './LocationNavbar/LocationNavbar';
 import Modal from "react-modal";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
-import { Input } from "react-materialize";
 import LocationsOptions from "./LocationsOptions/LocationsOptions";
 import LocationsGroups from "./LocationsGroups/LocationsGroups";
 import LocationModal from './Modals/LocationModal/LocationModal';
@@ -21,7 +19,6 @@ class Location extends Component {
       propertiesModal: false,
       viewMapModal: false,
     },
-    
     newLocation: {
       name: "",
       address: "",
@@ -47,44 +44,41 @@ class Location extends Component {
   };
 
   componentWillMount() {
-    //const allCategories = JSON.parse(localStorage.categories);
-    //const allLocations = JSON.parse(localStorage.locations);
     this.props.getLocations();
     this.props.getCategories();
-    console.log(this.props);
+
   }
-  //   componentWillUpdate() {
-  //       this.props.saveCategories();
-  //   }
 
   addHandler = () => {
-    console.log("add category");
     const newLocation = { ...this.state.newLocation };
     // the default coordinates (in-case user reject location permission request) in Jerusalem, Israel
     newLocation.coordinates = '31.771886, 35.289394';
     // the default Category is the first.
     newLocation.category = this.props.CategoryReducer.categories[0].name;
-    const modalState = {...this.state.modalState};
+    const modalState = { ...this.state.modalState };
     modalState.addModal = true;
-    this.setState({modalState, newLocation });
+    this.setState({ modalState, newLocation });
   };
+
   removeHandler = () => {
     this.props.removeLocation();
   };
+
   closeModal = type => {
     const modalState = this.state.modalState;
     modalState[type] = false
     this.setState({ modalState });
   };
-  //   inputChange = (type, e) => {
-  //     const x = { ...this.state[type] };
-  //     x.name = e.target.value;
-  //     this.setState({ [type]: x });
-  //     console.log(this.state);
-  //   };
 
-  addLocationHandler = () => {
-    this.props.addLocation(this.state.newLocation);
+  locationHandler = locationType => {
+    if (locationType === 'new') {
+      this.props.addLocation(this.state.newLocation);
+      this.closeModal('addModal');
+    }
+    else { //locationType === 'updated'
+      this.props.updateLocation(this.state.updatedLocation);
+      this.closeModal('editModal')
+    }
   };
 
   saveHandler = () => {
@@ -93,85 +87,73 @@ class Location extends Component {
 
   selectLocationHandler = name => {
     this.props.selectLocation(name);
-
     // device vibrates on location select
     window.navigator.vibrate(200);
   };
 
   editHandler = () => {
-    //const updatedLocation = this.state.updatedLocation;
     const updatedLocation = this.props.LocationReducer.locations.find(
-      location => location.isSelected
-    );
-    const modalState = {...this.state.modalState};
+      location => location.isSelected);
+    const modalState = { ...this.state.modalState };
     modalState.editModal = true;
     this.setState({ modalState, updatedLocation: updatedLocation });
-    //console.log(this.props)
-    console.log(updatedLocation);
-    console.log(this.state);
   };
 
-  // INPUT onChange SECTION
-
-  changedNewSelect = e => {
-    const newLocation = { ...this.state.newLocation };
-    newLocation.category = e.target.value;
-    this.setState({ newLocation });
-  };
-
-  changedUpdatedSelect = e => {
-    const updatedLocation = { ...this.state.updatedLocation };
-    updatedLocation.category = e.target.value;
-    console.log(this.state.updatedLocation);
-    this.setState({ updatedLocation });
-    console.log(this.state.updatedLocation);
-  };
-
-  newInputChange = (type, e) => {
-    const newLocation = this.state.newLocation;
-    newLocation[type] = e.target.value;
-    this.setState({ newLocation });
-    console.log(this.state);
-  };
-
-  updatedInputChange = (type, e) => {
-    const updatedLocation = this.state.updatedLocation;
-    updatedLocation[type] = e.target.value;
-    this.setState({ updatedLocation });
-    console.log(this.state);
-  };
-
-  newCoordsChange = marker => {
-    
-    const latlng = `${marker.lat}, ${marker.lng}`;
-    const newLocation = this.state.newLocation;
-    newLocation.coordinates = latlng;
-    this.setState({newLocation});
-    console.log(this.state)
-    console.log(latlng)
+  onSelectChange = (locationType, e) => {
+    if (locationType === 'new') {
+      const newLocation = { ...this.state.newLocation };
+      newLocation.category = e.target.value;
+      this.setState({ newLocation });
+    }
+    else { // locationType === 'updated'
+      const updatedLocation = { ...this.state.updatedLocation };
+      updatedLocation.category = e.target.value;
+      this.setState({ updatedLocation });
+    }
   }
-  updatedCoordsChange = marker => {
-    const latlng = `${marker.lat}, ${marker.lng}`;
-    const updatedLocation = this.state.updatedLocation;
-    updatedLocation.coordinates = latlng;
-    this.setState({updatedLocation});
-    console.log(this.state)
-    console.log(latlng)
+
+  onInputChange = (locationType, inputType, event) => {
+    if (locationType === 'new') {
+      const newLocation = this.state.newLocation;
+      newLocation[inputType] = event.target.value;
+      this.setState({ newLocation });
+    }
+    else { //locationType === 'updated'
+      const updatedLocation = this.state.updatedLocation;
+      updatedLocation[inputType] = event.target.value;
+      this.setState({ updatedLocation });
+    }
   }
+
+  /* 
+  * marker - object that represents latLng coords
+  * type - represents the type of location coords to change (viewedLocation / newLocation / updatedLocation)
+  */
+  onCoordsChange = (type, marker) => {
+    const latlng = `${marker.lat}, ${marker.lng}`;
+    if (type === 'new') {
+      const newLocation = this.state.newLocation;
+      newLocation.coordinates = latlng;
+      this.setState({ newLocation });
+    }
+    else { //type === 'updated') 
+      const updatedLocation = this.state.updatedLocation;
+      updatedLocation.coordinates = latlng;
+      this.setState({ updatedLocation });
+    }
+  }
+
   // when user re-selects option in group-by/sort-by
-
   sortOptionChange = e => {
     const options = this.state.options;
     options.sortBy = e.target.value;
     this.setState({ options });
-    console.log(this.state.options);
     this.props.sortLocation(e.target.value);
   };
   groupOptionChange = e => {
     const options = this.state.options;
     options.groupBy = e.target.value;
     this.setState({ options });
-    console.log(this.state.options);
     this.props.groupLocation(e.target.value);
   };
 
@@ -180,18 +162,17 @@ class Location extends Component {
     const viewedLocation = this.props.LocationReducer.locations.find(
       location => location.isSelected
     );
-    this.setState({ modalState: {...this.state.modalState, propertiesModal: true}, viewedLocation});
+    this.setState({ modalState: { ...this.state.modalState, propertiesModal: true }, viewedLocation });
   }
 
   viewMapHandler = () => {
     const viewedLocation = this.props.LocationReducer.locations.find(
       location => location.isSelected
     );
-    this.setState({ modalState: {...this.state.modalState, viewMapModal: true}, viewedLocation});
+    this.setState({ modalState: { ...this.state.modalState, viewMapModal: true }, viewedLocation });
   }
 
   render() {
-    // const noLocations = <h1>No locations available.</h1>;
     return (
       <div style={{ "padding-bottom": "70px", }}>
         <LocationNavbar
@@ -201,66 +182,60 @@ class Location extends Component {
           save={this.saveHandler}
           edit={this.editHandler}
           view={this.viewHandler}
-          map={this.viewMapHandler}
-        />
+          map={this.viewMapHandler} />
+
         <LocationsOptions
           sortOptionChange={this.sortOptionChange}
-          groupOptionChange={this.groupOptionChange}
-        />
-      
+          groupOptionChange={this.groupOptionChange} />
+
+
         <LocationsGroups
           locationsByGroup={this.props.LocationReducer.locationsByGroup}
-          selectLocationHandler={this.selectLocationHandler}
-        />
-      
+          selectLocationHandler={this.selectLocationHandler} />
+
+
         {/*MODALS*/}
         <LocationModal
           type='new'
           isOpen={this.state.modalState.addModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          newLocation={this.state.newLocation}
+          location={this.state.newLocation}
           categories={this.props.CategoryReducer.categories}
-          newInputChange={this.newInputChange}
-          addLocationHandler={this.addLocationHandler}
+          locationHandler={this.locationHandler}
           closeModal={this.closeModal}
-          changedNewSelect={this.changedNewSelect}
-          newCoordsChange={this.newCoordsChange}
-        />
+          onCoordsChange={this.onCoordsChange}
+          onInputChange={this.onInputChange}
+          onSelectChange={this.onSelectChange} />
 
         <LocationModal
           type='updated'
           isOpen={this.state.modalState.editModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          updatedLocation={this.state.updatedLocation}
+          location={this.state.updatedLocation}
           categories={this.props.CategoryReducer.categories}
-          updatedInputChange={this.updatedInputChange}
-          updateLocationHandler={this.props.updateLocation.bind(this, this.state.updatedLocation)}
+          locationHandler={this.locationHandler}
           closeModal={this.closeModal}
-          changedUpdatedSelect={this.changedUpdatedSelect}
-          updatedCoordsChange={this.updatedCoordsChange}
-        />
+          onCoordsChange={this.onCoordsChange}
+          onInputChange={this.onInputChange}
+          onSelectChange={this.onSelectChange} />
 
         <PropertiesModal
           isOpen={this.state.modalState.propertiesModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           closeModal={this.closeModal}
-          location={this.state.viewedLocation}
-        />
+          location={this.state.viewedLocation} />
 
-        <ViewMapModal 
+        <ViewMapModal
           type='view'
           coords={this.state.viewedLocation.coordinates}
-           isOpen={this.state.modalState.viewMapModal}
+          isOpen={this.state.modalState.viewMapModal}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           closeModal={this.closeModal}
-          location={this.state.viewedLocation}
-        />
-
-       
+          location={this.state.viewedLocation} />
       </div>
     );
   }
@@ -275,14 +250,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addLocation: name => {
-      return dispatch({
-        type: actions.ADD_LOCATION,
-        payload: {
-          name: name
-        }
-      });
-    },
     getLocations: () => {
       return dispatch({
         type: actions.GET_LOCATIONS
@@ -301,9 +268,7 @@ const mapDispatchToProps = dispatch => {
     selectLocation: name => {
       return dispatch({
         type: actions.SELECT_LOCATION,
-        payload: {
-          name
-        }
+        payload: { name }
       });
     },
     removeLocation: () => {
@@ -312,54 +277,30 @@ const mapDispatchToProps = dispatch => {
       });
     },
     updateLocation: location => {
-      console.log("updated location in dispatch");
-      console.log(location);
       return dispatch({
         type: actions.UPDATE_LOCATION,
-        payload: {
-          location
-        }
+        payload: { location }
       });
     },
     addLocation: location => {
       return dispatch({
         type: actions.ADD_LOCATION,
-        payload: {
-          location
-        }
+        payload: { location }
       });
     },
     sortLocation: sortType => {
       return dispatch({
         type: actions.SORT_LOCATIONS,
-        payload: {
-          sortType
-        }
+        payload: { sortType }
       });
     },
     groupLocation: groupType => {
       return dispatch({
         type: actions.GROUP_LOCATIONS,
-        payload: {
-          groupType
-        }
+        payload: { groupType }
       });
     }
   };
 };
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Location);
+export default connect(mapStateToProps, mapDispatchToProps)(Location);

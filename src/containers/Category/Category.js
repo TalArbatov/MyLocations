@@ -3,6 +3,8 @@ import TopNavbar from "../TopNavbar/TopNavbar";
 import Modal from "react-modal";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
+import cssStyles from './Category.css';
+
 Modal.setAppElement("#root");
 
 const customStyles = {
@@ -29,7 +31,6 @@ class Category extends Component {
   };
 
   componentDidMount() {
-    const allCategories = localStorage.categories;
     this.props.getCategories();
     console.log(this.props);
   }
@@ -67,7 +68,7 @@ class Category extends Component {
   }
 
   render() {
-    const noCategories = <h1>No categories available.</h1>;
+    const noCategories = <div className={cssStyles.gradient}><h1>No categories available.</h1></div>;
     return (
       <div>
         <TopNavbar

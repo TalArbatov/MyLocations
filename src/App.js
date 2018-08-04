@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Counter from "./components/Counter";
 import { BrowserRouter, Route } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Category from "./containers/Category/Category";
@@ -16,7 +15,6 @@ class App extends Component {
         <BrowserRouter>
           
           <Layout>
-            <Route path="/counter" component={() => <Counter />} />
             <Route exact path="/category" component={() => <Category />} />
             <Route exact path="/location" component={() => <Location />} />
           </Layout>

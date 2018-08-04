@@ -1,7 +1,4 @@
-export const INC_COUNTER = 'INC_COUNTER';
-export const DEC_COUNTER = 'DEC_COUNTER';
-
-
+// CategoryReducer actions
 export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const REMOVE_CATEGORY = 'REMOVE_CATEGORY';
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY';
@@ -10,7 +7,7 @@ export const GET_CATEGORY = 'GET_CATEGORY';
 export const SAVE_CATEGORY = 'SAVE_CATEGORY';
 export const SELECT_CATEGORY = 'SELECT_CATEGORY';
 
-
+// LocationReducer actions
 export const ADD_LOCATION = 'ADD_LOCATION';
 export const REMOVE_LOCATION = 'REMOVE_LOCATION';
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';
