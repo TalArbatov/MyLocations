@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import TopNavbar from "../TopNavbar/TopNavbar";
+import TopNavbar from "./TopNavbar/TopNavbar";
 import Modal from "react-modal";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
-import cssStyles from './Category.css';
 import CategoryModal from './../../components/Modals/CategoryModal/CategoryModal';
+import CategoryTable from './CategoryTable/CategoryTable';
 
 Modal.setAppElement("#root");
 
@@ -21,6 +21,7 @@ const customStyles = {
 
 class Category extends Component {
   state = {
+    isSelected:false,
     addModal: false,
     editModal: false,
     newCategory: {
@@ -63,6 +64,8 @@ class Category extends Component {
   };
 
   selectCategoryHandler = (name) => {
+    console.log('selectCategoryHandler')
+      this.setState({isSelected: true})
       this.props.selectCategory(name);
   }
 
@@ -73,7 +76,6 @@ class Category extends Component {
   }
 
   render() {
-    const noCategories = <div className={cssStyles.gradient}><h1>No categories available.</h1></div>;
     return (
       <div>
         <TopNavbar
@@ -82,28 +84,12 @@ class Category extends Component {
           remove={this.removeHandler}
           save={this.saveHandler}
           edit={this.openEditModal}
+          isSelected={this.state.isSelected}
         />
-        {this.props.CategoryReducer.categories.length === 0 ||
-        this.props.CategoryReducer.categories == undefined ? (
-          noCategories
-        ) : (
-          <table>
-            <thead />
-            <tbody>
-              {this.props.CategoryReducer.categories.map((category, index) => {
-                  let style = {'background': 'transparent'};
-                  if(category.isSelected)
-                    style.background = 'blue';
-                return (
-                  <tr key={index} style={style} onClick={this.selectCategoryHandler.bind(this, category.name)}>
-                    <td>{index}</td>
-                    <td>{category.name}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
+        <CategoryTable 
+          categories={this.props.CategoryReducer.categories}
+          selectCategoryHandler={this.selectCategoryHandler}/>
+          
 
         {/*MODALS*/}
         <CategoryModal

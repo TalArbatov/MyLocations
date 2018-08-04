@@ -24,8 +24,8 @@ const LocationTable = props => {
             </thead>
             <tbody>
               {props.locations.map((location, index) => {
-                let style = { background: "transparent" };
-                if (location.isSelected) style.background = "blue !important";
+                //let style = { background: "transparent" };
+                //if (location.isSelected) style.background = "blue !important";
     
                 //test
                 let newStyle = '';

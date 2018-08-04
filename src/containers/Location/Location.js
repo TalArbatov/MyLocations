@@ -13,6 +13,7 @@ Modal.setAppElement("#root");
 
 class Location extends Component {
   state = {
+    isSelected: false,
     modalState: {
       addModal: false,
       editModal: false,
@@ -87,6 +88,7 @@ class Location extends Component {
 
   selectLocationHandler = name => {
     this.props.selectLocation(name);
+    this.setState({isSelected: true})
     // device vibrates on location select
     window.navigator.vibrate(200);
   };
@@ -182,7 +184,8 @@ class Location extends Component {
           save={this.saveHandler}
           edit={this.editHandler}
           view={this.viewHandler}
-          map={this.viewMapHandler} />
+          map={this.viewMapHandler}
+          isSelected={this.state.isSelected} />
 
         <LocationOptions
           sortOptionChange={this.sortOptionChange}
