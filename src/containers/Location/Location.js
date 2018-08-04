@@ -75,6 +75,13 @@ class Location extends Component {
     if (locationType === 'new') {
       this.props.addLocation(this.state.newLocation);
       this.closeModal('addModal');
+      const newLocation = {
+        name: "",
+        address: "",
+        coordinates: "",
+        category: ""
+      };
+      this.setState({newLocation})
     }
     else { //locationType === 'updated'
       this.props.updateLocation(this.state.updatedLocation);
