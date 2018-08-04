@@ -1,0 +1,17 @@
+
+.header {
+    font-weight: 100;
+    font-size:25px;
+    width:50vw;
+    text-align: center;
+    margin:30px auto 0 auto;
+    color:black;
+    background: repeating-linear-gradient(to left, white, #f3f3f3, white)
+}
+
+.header p {
+    margin:0;
+}
+.wrapper {
+    text-align: center;
+}

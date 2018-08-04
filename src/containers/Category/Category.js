@@ -5,19 +5,9 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 import CategoryModal from './../../components/Modals/CategoryModal/CategoryModal';
 import CategoryTable from './CategoryTable/CategoryTable';
+import cssStyles from './Category.css';
 
 Modal.setAppElement("#root");
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
-  }
-};
 
 class Category extends Component {
   state = {
@@ -77,7 +67,7 @@ class Category extends Component {
 
   render() {
     return (
-      <div>
+      <div className={cssStyles.wrapper}>
         <TopNavbar
           status="category"
           add={this.openAddModal}
@@ -86,6 +76,8 @@ class Category extends Component {
           edit={this.openEditModal}
           isSelected={this.state.isSelected}
         />
+
+        <div className={cssStyles.header}><p>Categories</p></div>
         <CategoryTable 
           categories={this.props.CategoryReducer.categories}
           selectCategoryHandler={this.selectCategoryHandler}/>

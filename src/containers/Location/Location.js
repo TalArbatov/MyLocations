@@ -196,7 +196,6 @@ class Location extends Component {
           locationsByGroup={this.props.LocationReducer.locationsByGroup}
           selectLocationHandler={this.selectLocationHandler} />
 
-
         {/*MODALS*/}
         <LocationModal
           type='new'
