@@ -9,7 +9,6 @@ const LocationTableItem = props => {
         <td>{props.index + 1}</td>
         <td>{props.location.name}</td>
         <td>{props.location.address}</td>
-        <td>{props.location.coordinates}</td>
         <td>{props.location.category}</td>
       </tr>
     );

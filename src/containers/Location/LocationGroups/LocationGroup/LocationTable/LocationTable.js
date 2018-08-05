@@ -18,7 +18,6 @@ const LocationTable = props => {
                     <th>#</th>
                     <th>Name</th>
                     <th>Address</th>
-                    <th>Coords</th>
                     <th>Category</th>
                 </tr>
             </thead>
@@ -32,7 +31,7 @@ const LocationTable = props => {
                 if(location.isSelected) newStyle = cssStyles.important;
     
                 return (
-                  <LocationTableItem location={location}
+                  <LocationTableItem key={index} location={location}
                   styling={newStyle} index={index} selectLocationHandler={props.selectLocationHandler}/>
                 );
               })}

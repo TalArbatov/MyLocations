@@ -183,7 +183,7 @@ class Location extends Component {
 
   render() {
     return (
-      <div style={{ "padding-bottom": "70px", }}>
+      <div style={{ "paddingBottom": "70px", }}>
         <LocationNavbar
           status="category"
           add={this.addHandler}

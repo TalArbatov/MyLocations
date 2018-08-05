@@ -6,9 +6,9 @@ const LocationGroups = props => {
     return(
         <div className={cssStyles.wrapper}>
             {
-                props.locationsByGroup.map(group => {
+                props.locationsByGroup.map((group, index) => {
                     return(
-                        <LocationGroup group={group} selectLocationHandler={props.selectLocationHandler}/>
+                        <LocationGroup key={index} group={group} selectLocationHandler={props.selectLocationHandler}/>
                     )
                 })
             }
