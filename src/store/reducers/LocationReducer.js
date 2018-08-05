@@ -3,7 +3,7 @@ import * as actions from "../actions";
 let allLocations = [];
 let locationsByGroup = [{
   header: "All locations",
-  locations: []
+  locations: JSON.stringify([])
 }];
 
 try {

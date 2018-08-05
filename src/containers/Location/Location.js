@@ -49,7 +49,6 @@ class Location extends Component {
     this.props.getCategories();
 
   }
-
   addHandler = () => {
     const newLocation = { ...this.state.newLocation };
     // the default coordinates (in-case user reject location permission request) in Jerusalem, Israel
@@ -74,6 +73,7 @@ class Location extends Component {
   locationHandler = locationType => {
     if (locationType === 'new') {
       this.props.addLocation(this.state.newLocation);
+      this.saveHandler();
       this.closeModal('addModal');
       const newLocation = {
         name: "",

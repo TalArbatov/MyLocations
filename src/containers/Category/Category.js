@@ -3,26 +3,27 @@ import TopNavbar from "./TopNavbar/TopNavbar";
 import Modal from "react-modal";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
-import CategoryModal from './../../components/Modals/CategoryModal/CategoryModal';
-import CategoryTable from './CategoryTable/CategoryTable';
-import cssStyles from './Category.css';
+import CategoryModal from "./../../components/Modals/CategoryModal/CategoryModal";
+import CategoryTable from "./CategoryTable/CategoryTable";
+import cssStyles from "./Category.css";
 
 Modal.setAppElement("#root");
 
 class Category extends Component {
   state = {
-    isSelected:false,
+    isSelected: false,
     addModal: false,
     editModal: false,
     newCategory: {
       name: ""
     },
     updatedCategory: {
-        name: ''
+      name: ""
     }
   };
 
   componentDidMount() {
+    console.log('getting categories...')
     this.props.getCategories();
     console.log(this.props);
   }
@@ -32,7 +33,7 @@ class Category extends Component {
   removeHandler = () => {
     this.props.removeCategory();
   };
-  closeModal = (modal) => {
+  closeModal = modal => {
     this.setState({ [modal]: false });
   };
   inputChange = (type, e) => {
@@ -43,27 +44,30 @@ class Category extends Component {
   };
   addCategoryHandler = () => {
     this.props.addCategory(this.state.newCategory.name);
-    this.closeModal('addModal');
+    this.closeModal("addModal");
+    this.saveHandler();
   };
   editCategoryHandler = () => {
     this.props.updateCategory(this.state.updatedCategory.name);
-    this.closeModal('editModal');
-  }
+    this.closeModal("editModal");
+  };
   saveHandler = () => {
     this.props.saveCategories();
   };
 
-  selectCategoryHandler = (name) => {
-    console.log('selectCategoryHandler')
-      this.setState({isSelected: true})
-      this.props.selectCategory(name);
-  }
+  selectCategoryHandler = name => {
+    console.log("selectCategoryHandler");
+    this.setState({ isSelected: true });
+    this.props.selectCategory(name);
+  };
 
   openEditModal = () => {
     const updatedCategory = this.state.updatedCategory;
-    updatedCategory.name = this.props.CategoryReducer.categories.find(category => category.isSelected).name;
-    this.setState({editModal: true, updatedCategory})
-  }
+    updatedCategory.name = this.props.CategoryReducer.categories.find(
+      category => category.isSelected
+    ).name;
+    this.setState({ editModal: true, updatedCategory });
+  };
 
   render() {
     return (
@@ -77,30 +81,34 @@ class Category extends Component {
           isSelected={this.state.isSelected}
         />
 
-        <div className={cssStyles.header}><p>Categories</p></div>
-        <CategoryTable 
+        <div className={cssStyles.header}>
+          <p>Categories</p>
+        </div>
+        <CategoryTable
           categories={this.props.CategoryReducer.categories}
-          selectCategoryHandler={this.selectCategoryHandler}/>
-          
+          selectCategoryHandler={this.selectCategoryHandler}
+        />
 
         {/*MODALS*/}
         <CategoryModal
-          type='new'
+          type="new"
           isOpen={this.state.addModal}
           onAfterOpen={this.afterOpenModal}
           category={this.state.newCategory}
           closeModal={this.closeModal}
           categoryHandler={this.addCategoryHandler}
-          inputChange={this.inputChange}   />
-     
+          inputChange={this.inputChange}
+        />
+
         <CategoryModal
-          type='updated'
+          type="updated"
           isOpen={this.state.editModal}
           onAfterOpen={this.afterOpenModal}
           category={this.state.updatedCategory}
           closeModal={this.closeModal}
           categoryHandler={this.editCategoryHandler}
-          inputChange={this.inputChange} />
+          inputChange={this.inputChange}
+        />
       </div>
     );
   }
@@ -133,26 +141,26 @@ const mapDispatchToProps = dispatch => {
       });
     },
     selectCategory: name => {
-        return dispatch({
-          type: actions.SELECT_CATEGORY,
-          payload: {
-              name
-          }
-        });
-      },
-      removeCategory: () => {
-        return dispatch({
-          type: actions.REMOVE_CATEGORY
-        });
-      },
-      updateCategory: name => {
-        return dispatch({
-          type: actions.UPDATE_CATEGORY,
-          payload: {
-              name
-          }
-        });
-      }
+      return dispatch({
+        type: actions.SELECT_CATEGORY,
+        payload: {
+          name
+        }
+      });
+    },
+    removeCategory: () => {
+      return dispatch({
+        type: actions.REMOVE_CATEGORY
+      });
+    },
+    updateCategory: name => {
+      return dispatch({
+        type: actions.UPDATE_CATEGORY,
+        payload: {
+          name
+        }
+      });
+    }
   };
 };
 

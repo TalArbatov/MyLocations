@@ -11,9 +11,12 @@ export default (state = initialState, action) => {
 
     case actions.ADD_CATEGORY:
       newState.categories.push({ name: action.payload.name });
+      console.log(newState.categories)
       break;
 
     case actions.SAVE_CATEGORY:
+      console.log('saving...');
+      console.log(newState.categories)
       localStorage.setItem("categories", JSON.stringify(newState.categories));
       break;
 
