@@ -1,11 +1,13 @@
-import React from 'react';
-import { Navbar } from 'react-materialize';
+import React from "react";
+import { Navbar } from "react-materialize";
+import cssStyles from "./TopNavbar.css";
 
 const TopNavbar = props => {
-    return (
-        <Navbar brand="My Locations" right>
-        </Navbar>
-    );
-}
+  return (
+    <div className={" " + cssStyles.navbar}>
+      <Navbar brand="My Locations" />
+    </div>
+  );
+};
 
 export default TopNavbar;

@@ -182,8 +182,8 @@ class Location extends Component {
   }
 
   render() {
-    return (
-      <div style={{ "paddingBottom": "70px", }}>
+    return[
+      
         <LocationNavbar
           status="category"
           add={this.addHandler}
@@ -192,8 +192,8 @@ class Location extends Component {
           edit={this.editHandler}
           view={this.viewHandler}
           map={this.viewMapHandler}
-          isSelected={this.state.isSelected} />
-
+          isSelected={this.state.isSelected} />,
+<div>
         <LocationOptions
           sortOptionChange={this.sortOptionChange}
           groupOptionChange={this.groupOptionChange} />
@@ -245,8 +245,7 @@ class Location extends Component {
           onRequestClose={this.closeModal}
           closeModal={this.closeModal}
           location={this.state.viewedLocation} />
-      </div>
-    );
+      </div>];
   }
 }
 

@@ -1,0 +1,16 @@
+.navbar #nav-mobile {
+  display: none !important;
+}
+.navbar .button-collapse {
+  display: none !important;
+}
+.button-collapse {
+    display: none;    
+}
+.navbar .hide-on-med-and-down {
+  display: block !important;
+}
+
+.navbar .sidenav-overlay {
+    display:none;
+}

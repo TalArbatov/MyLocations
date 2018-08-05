@@ -1,22 +1,27 @@
 import * as actions from "../actions";
 
 let allLocations = [];
-let locationsByGroup = [{
-  header: "All locations",
-  locations: JSON.stringify([])
-}];
-
-try {
-  allLocations = JSON.parse(localStorage.locations);
-  locationsByGroup = [{
-    header: 'All locations',
-    locations: allLocations
-  }]
+let locationsByGroup = [
+  {
+    header: "All locations",
+    locations: JSON.stringify([])
+  }
+];
+test();
+function test() {
+  try {
+    allLocations = JSON.parse(localStorage.locations);
+    locationsByGroup = [
+      {
+        header: "All locations",
+        locations: allLocations
+      }
+    ];
+  } catch (e) {
+    localStorage.locations = JSON.stringify([]);
+    test();
+  }
 }
-catch (e) {
-  localStorage.locations = JSON.stringify([]);
-}
-
 const initialState = {
   locations: allLocations,
   locationsByGroup: locationsByGroup
@@ -30,11 +35,15 @@ export default (state = initialState, action) => {
       let locationsByGroup;
       try {
         allLocations = JSON.parse(localStorage.locations);
-        locationsByGroup = [{
-          header: "All locations",
-          locations: allLocations
-        }];
-      } catch (e) { throw e }
+        locationsByGroup = [
+          {
+            header: "All locations",
+            locations: allLocations
+          }
+        ];
+      } catch (e) {
+        throw e;
+      }
       newState.locationsByGroup = locationsByGroup;
       newState.locations = allLocations;
       break;
@@ -74,7 +83,7 @@ export default (state = initialState, action) => {
         case "Alphabetical order":
           newState.locationsByGroup.forEach(group => {
             group.locations.sort((a, b) => {
-              if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
+              if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
               return -1;
             });
           });
@@ -82,7 +91,7 @@ export default (state = initialState, action) => {
         case "Alphabetical order (reverse)":
           newState.locationsByGroup.forEach(group => {
             group.locations.sort((a, b) => {
-              if (a.name.toLowerCase() > b.name.toLowerCase()) return -1
+              if (a.name.toLowerCase() > b.name.toLowerCase()) return -1;
               return 1;
             });
           });
@@ -91,7 +100,9 @@ export default (state = initialState, action) => {
           let allLocations = [];
           try {
             allLocations = JSON.parse(localStorage.locations);
-          } catch (e) { throw e }
+          } catch (e) {
+            throw e;
+          }
           newState.locations = allLocations;
           break;
 

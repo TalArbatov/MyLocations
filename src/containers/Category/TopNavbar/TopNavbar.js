@@ -7,7 +7,7 @@ const TopNavbar = props => {
         <Navbar brand="My Locations" right>
             <NavItem onClick={props.add} >Add</NavItem>
             <NavItem onClick={isSelected ? props.remove : () => {}} >Remove</NavItem>
-            <NavItem onClick={props.save} >Save</NavItem>
+            {/* <NavItem onClick={props.save} >Save</NavItem> */}
             <NavItem onClick={isSelected ? props.edit : () => {}} >Edit</NavItem>
         </Navbar>
     );
