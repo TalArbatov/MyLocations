@@ -60,13 +60,15 @@ export default (state = initialState, action) => {
       newState.locations.map(location => {
         if (location.name === action.payload.name) location.isSelected = true;
         else location.isSelected = false;
+        return location;
       });
       break;
 
     case actions.REMOVE_LOCATION:
       let i;
-      newState.locations.map((category, index) => {
-        if (category.isSelected) i = index;
+      newState.locations.map((location, index) => {
+        if (location.isSelected) i = index;
+        return location;
       });
       newState.locations.splice(i, 1);
       break;
@@ -74,6 +76,7 @@ export default (state = initialState, action) => {
     case actions.UPDATE_LOCATION:
       newState.locations.map((location, index) => {
         if (location.isSelected) i = index;
+        return location;
       });
       newState.locations[i] = { ...action.payload.location };
       break;
@@ -145,6 +148,7 @@ export default (state = initialState, action) => {
             newState.locations.map(location => {
               if (location.category === uniqueExsitingCategories[i])
                 group.locations.push(location);
+              return location;
             });
             locationsByGroup.push(group);
           }

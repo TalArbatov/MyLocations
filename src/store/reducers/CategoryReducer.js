@@ -15,46 +15,43 @@ export default (state = initialState, action) => {
       break;
 
     case actions.SAVE_CATEGORY:
-      console.log('saving...');
-      console.log(newState.categories)
       localStorage.setItem("categories", JSON.stringify(newState.categories));
       break;
 
     case actions.SELECT_CATEGORY:
-      //console.log(newState.categories);
       newState.categories.map(category => {
         if (category.name === action.payload.name) category.isSelected = true;
         else category.isSelected = false;
+        return category;
       });
       break;
 
     case actions.REMOVE_CATEGORY:
-      let index;
-      newState.categories.map((category, index) => {
-        if (category.isSelected) index = index;
-      });
-      newState.categories.splice(index, 1);
-      break;
-
-    case actions.UPDATE_CATEGORY:
       let i;
       newState.categories.map((category, index) => {
         if (category.isSelected) i = index;
+        return category;
+      });
+      newState.categories.splice(i, 1);
+      break;
+
+    case actions.UPDATE_CATEGORY:
+      newState.categories.map((category, index) => {
+        if (category.isSelected) i = index;
+        return category;
       });
       newState.categories[i].name = action.payload.name;
       break;
 
     case actions.GET_CATEGORIES:
-      console.log('GET_CATEGORIES');
       let allCategories = [];
       try {
         allCategories = JSON.parse(localStorage.categories);
         allCategories.map(category => {
           category.isSelected = false;
+          return category;
         });
       } catch (e) {
-        console.log("ERROR, CATCHED!");
-        console.log(e);
         localStorage.categories = JSON.stringify([]);
       }
       newState.categories = allCategories;
