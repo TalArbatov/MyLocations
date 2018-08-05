@@ -54,10 +54,7 @@ export default (state = initialState, action) => {
       } catch (e) {
         localStorage.categories = JSON.stringify([]);
       }
-      newState.categories = allCategories;
-    
-      //console.log('state inside reducer: ');
-      //console.log(newState)
+      newState.categories = allCategories;    
       break;
 
     default:
