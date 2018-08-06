@@ -4,7 +4,7 @@ import { Navbar, NavItem } from "react-materialize";
 const LocationNavbar = props => {
   return (
     <Navbar brand="My Locations" right>
-      <NavItem disabled={true} onClick={props.add}>Add</NavItem>
+      <NavItem onClick={props.categories.length > 0 ? props.add : () => {}}>Add</NavItem>
       <NavItem onClick={props.isSelected ? props.remove : () => {}}>Remove</NavItem>
       {/* <NavItem onClick={props.save}>Save</NavItem> */}
       <NavItem onClick={props.isSelected ? props.edit : () => {}}>Edit</NavItem>

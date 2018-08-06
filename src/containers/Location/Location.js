@@ -192,7 +192,8 @@ class Location extends Component {
           edit={this.editHandler}
           view={this.viewHandler}
           map={this.viewMapHandler}
-          isSelected={this.state.isSelected} />,
+          isSelected={this.state.isSelected}
+          categories={this.props.CategoryReducer.categories} />,
 <div>
         <LocationOptions
           sortOptionChange={this.sortOptionChange}

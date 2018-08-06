@@ -7,21 +7,8 @@ let locationsByGroup = [
     locations: JSON.stringify([])
   }
 ];
-test();
-function test() {
-  try {
-    allLocations = JSON.parse(localStorage.locations);
-    locationsByGroup = [
-      {
-        header: "All locations",
-        locations: allLocations
-      }
-    ];
-  } catch (e) {
-    localStorage.locations = JSON.stringify([]);
-    test();
-  }
-}
+getLocation();
+
 const initialState = {
   locations: allLocations,
   locationsByGroup: locationsByGroup
@@ -169,4 +156,19 @@ export default (state = initialState, action) => {
 // utilities
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
+}
+
+function getLocation() {
+  try {
+    allLocations = JSON.parse(localStorage.locations);
+    locationsByGroup = [
+      {
+        header: "All locations",
+        locations: allLocations
+      }
+    ];
+  } catch (e) {
+    localStorage.locations = JSON.stringify([]);
+    getLocation();
+  }
 }

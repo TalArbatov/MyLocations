@@ -60,7 +60,7 @@ export default class GoogleMaps extends Component {
                     marker={this.state.marker}
                     onClick={this.markerChangeHandler}
                     onMarkerChange={this.markerChangeHandler}
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGNQD1Gdkz0i_1tIGLKP0dJ0mOC9U6ZO8&callback=initMap"
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJeO3NCwUlkErtgidqUV3mt2iEY8WvVEE&callback=initMap"
                     loadingElement={< div style={{ height: `100%`, width: '100%' }} />}
                     containerElement={< div style={{ height: `500px`, width: '100%', textAlign: 'center' }} />}
                     mapElement={< div style={{ height: `100%`, width: '100%' }} />} />
